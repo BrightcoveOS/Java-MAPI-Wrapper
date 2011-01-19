@@ -1,0 +1,79 @@
+<?xml version="1.0" ?>
+<project default="main">
+	<property name="release-package-name" value="bc-java-mapi-wrapper"/>
+	<property name="release-package-version" value="3.0"/>
+	
+	<property name="apache-mime-jar" value="lib/apache-mime4j-0.6.1.jar"/>
+	<property name="bc-commons-catalog-objects-jar" value="lib/bc-commons-catalog-objects-3.0.jar"/>
+	<property name="bc-commons-collection-utils-jar" value="lib/bc-commons-collection-utils-3.0.jar"/>
+	<property name="bc-commons-http-utils-jar" value="lib/bc-commons-http-utils-3.0.jar"/>
+	<property name="apache-io-jar" value="lib/commons-io-2.0.1.jar"/>
+	<property name="apache-logging-jar" value="lib/commons-logging-1.1.1.jar"/>
+	<property name="apache-http-client" value="lib/httpclient-4.0.3.jar"/>
+	<property name="apache-http-core-jar" value="lib/httpcore-4.1.jar"/>
+	<property name="apache-http-mime-jar" value="lib/httpmime-4.0.3.jar"/>
+	<property name="json-org-jar" value="lib/json-org.jar"/>
+	
+	<path id="project.class.path">
+		<pathelement location="${apache-mime-jar}"/>
+		<pathelement location="${bc-commons-catalog-objects-jar}"/>
+		<pathelement location="${bc-commons-collection-utils-jar}"/>
+		<pathelement location="${bc-commons-http-utils-jar}"/>
+		<pathelement location="${apache-io-jar}"/>
+		<pathelement location="${apache-logging-jar}"/>
+		<pathelement location="${apache-http-client}"/>
+		<pathelement location="${apache-http-core-jar}"/>
+		<pathelement location="${apache-http-mime-jar}"/>
+		<pathelement location="${json-org-jar}"/>
+	</path>
+	
+	<target name="main" depends="prepare, clean, compile, javadoc, release" description="Main target">
+		<echo>Full build complete.</echo>
+	</target>
+	
+	<target name="prepare" description="Prepare target">
+		<echo>Preparing project:</echo>
+		<mkdir dir="bin"/>
+		<mkdir dir="release"/>
+		<mkdir dir="javadoc"/>
+	</target>
+	
+	<target name="clean" description="Clean target">
+		<echo>Cleaning project:</echo>
+		<delete>
+			<fileset dir="release" includes="${release-package-name}.jar"/>
+			<fileset dir="javadoc" includes="**/*"/>
+		</delete>
+		<delete dir="bin/com" />
+	</target>
+	
+	<target name="compile" description="Compilation target">
+		<echo>Compiling source code:</echo>
+		<javac debug="on" srcdir="src" destdir="bin" includes="**/*">
+			<classpath refid="project.class.path" />
+		</javac>
+	</target>
+	
+	<target name="javadoc" description="JavaDoc target">
+		<javadoc packagenames="com.*"
+			sourcepath="src"
+			defaultexcludes="yes"
+			destdir="javadoc"
+			author="true"
+			version="true"
+			use="true"
+			windowtitle="${release-package-name} - v${release-package-version}">
+				<classpath refid="project.class.path" />
+				<doctitle><![CDATA[<h1>com.brightcove.commons.collection</h1>]]></doctitle>
+				<bottom><![CDATA[<i>http://opensource.brightcove.com/.</i>]]></bottom>
+		</javadoc>
+	</target>
+	
+	<target name="release" description="Compression target">
+		<echo>Building jar file:</echo>
+		<jar jarfile="release/${release-package-name}-${release-package-version}.jar" duplicate="fail" whenmanifestonly="fail">
+			<fileset dir="bin" includes="**/*"/>
+			<fileset dir="src" includes="**/*"/>
+		</jar>
+	</target>
+</project>

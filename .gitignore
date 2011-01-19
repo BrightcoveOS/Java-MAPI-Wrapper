@@ -1,1 +1,8 @@
 /Icon.png
+.metadata/
+java-mapi-wrapper/bin/com
+java-mapi-wrapper/release/
+java-mapi-wrapper/.classpath
+java-mapi-wrapper/.project
+java-mapi-wrapper/.settings/
+java-mapi-wrapper/lib/
