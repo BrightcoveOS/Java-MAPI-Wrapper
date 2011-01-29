@@ -40,6 +40,8 @@ public class MediaApiException extends BrightcoveException {
 		JSONObject errorObj  = null;
 		try{
 			String errorString = jsonObject.getString("error");
+			if(errorString == null){ errorString = "null"; }
+			
 			if("null".equals(errorString)){
 				// Ignore - basically "null" means there was no error
 			}
