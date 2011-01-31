@@ -1,2 +1,3 @@
 com.brightcove.mediaapi.exceptions
 com.brightcove.mediaapi.wrapper
+com.brightcove.mediaapi.wrapper.test
