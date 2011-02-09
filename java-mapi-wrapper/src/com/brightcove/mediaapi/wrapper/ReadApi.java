@@ -159,7 +159,7 @@ public class ReadApi {
 	private void init(){
 		log       = null;
 		charSet   = "UTF-8";
-		httpAgent = new DefaultHttpClient();
+		// httpAgent = new DefaultHttpClient();
 		
 		enableUds = false;
 		
@@ -232,7 +232,9 @@ public class ReadApi {
 		HttpGet      httpGet  = new HttpGet(commandUrl);
 		HttpResponse response = null;
 		try{
+			httpAgent = new DefaultHttpClient();
 			response = httpAgent.execute(httpGet);
+			httpAgent.getConnectionManager().shutdown();
 		}
 		catch(ClientProtocolException cpe){
 			throw new WrapperException(WrapperExceptionCode.CLIENT_PROTOCOL_EXCEPTION, "Exception: '" + cpe + "'");

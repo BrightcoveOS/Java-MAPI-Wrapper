@@ -151,7 +151,7 @@ public class WriteApi {
 	private void init(){
 		log       = null;
 		charSet   = "UTF-8";
-		httpAgent = new DefaultHttpClient();
+		// httpAgent = new DefaultHttpClient();
 		
 		writeProtocolScheme = WRITE_API_DEFAULT_SCHEME;
 		writeHost           = WRITE_API_DEFAULT_HOST;
@@ -212,7 +212,9 @@ public class WriteApi {
 		
 		HttpResponse response = null;
 		try{
+			httpAgent = new DefaultHttpClient();
 			response = httpAgent.execute(method);
+			httpAgent.getConnectionManager().shutdown();
 		}
 		catch(ClientProtocolException cpe){
 			throw new WrapperException(WrapperExceptionCode.CLIENT_PROTOCOL_EXCEPTION, "Exception: '" + cpe + "'");
