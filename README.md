@@ -8,6 +8,18 @@ This project relies on the [Brightcove Commons open source libraries](https://gi
 Downloads
 =========
 
+**Version 3.0.1**:
+
+This patch release creates a new HttpClient object for every request.  Under very high load, this isn't as efficient, but it allows us to easily close socket connections properly which is more important.
+
+Library Only:
+
+- [BC Java MAPI Wrapper v3.0.1](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-3.0.1.jar)
+
+Full Download - including Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v3.0.1 with dependencies](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-3.0.1-with-dep.zip)
+
 **Version 3.0**:
 
 Library Only:
