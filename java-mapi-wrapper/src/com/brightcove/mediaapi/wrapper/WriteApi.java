@@ -12,6 +12,7 @@ import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -36,6 +37,7 @@ import com.brightcove.commons.catalog.objects.Playlist;
 import com.brightcove.commons.catalog.objects.Video;
 import com.brightcove.commons.catalog.objects.enumerations.EncodeToEnum;
 import com.brightcove.commons.catalog.objects.enumerations.UploadStatusEnum;
+import com.brightcove.commons.catalog.objects.enumerations.VideoFieldEnum;
 import com.brightcove.commons.http.HttpUtils;
 import com.brightcove.mediaapi.exceptions.BrightcoveException;
 import com.brightcove.mediaapi.exceptions.MediaApiException;
@@ -708,6 +710,25 @@ public class WriteApi {
 	 * </ul>
 	 */
 	public Video UpdateVideo(String writeToken, Video video) throws BrightcoveException {
+		EnumSet<VideoFieldEnum> includeNullFields = VideoFieldEnum.CreateEmptyEnumSet();
+		return UpdateVideo(writeToken, video, includeNullFields);
+	}
+	
+	/**
+	 * <p>Use this method to modify the metadata for a single video in your Brightcove Media Library.</p>
+	 * 
+	 * @param writeToken The Write API authentication token required to use this method.
+	 * @param video The video meta data to be updated.
+	 * @param includeNullFields Set of fields on the video to update even if set to null.
+	 * @return The video object updated.
+	 * @throws BrightcoveException If any of the following are true:<ul>
+	 * 	<li>Request to the Media API fails</li>
+	 * 	<li>Media API reports an error with the request</li>
+	 * 	<li>Video could not be updated</li>
+	 * 	<li>Response from the Media API couldn't be parsed</li>
+	 * </ul>
+	 */
+	public Video UpdateVideo(String writeToken, Video video, EnumSet<VideoFieldEnum> includeNullFields) throws BrightcoveException {
 		File file = null;
 		
 		JSONObject json = null;
@@ -719,7 +740,7 @@ public class WriteApi {
 			json.put("params", paramObj);
 			
 			paramObj.put("token", writeToken);
-			paramObj.put("video", video.toJson());
+			paramObj.put("video", video.toJson(includeNullFields));
 		}
 		catch(JSONException jsone){
 			throw new WrapperException(WrapperExceptionCode.INVALID_JSON_BUILD_REQUEST, "Exception caught trying to add parameters to JSON request object: " + jsone + ".");
