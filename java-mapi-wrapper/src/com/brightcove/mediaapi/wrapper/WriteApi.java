@@ -213,29 +213,25 @@ public class WriteApi {
 		method.setEntity(entityIn);
 		
 		HttpResponse response = null;
+		String       buffer;
 		try{
 			httpAgent = new DefaultHttpClient();
 			response = httpAgent.execute(method);
+			
+			// Make sure the HTTP communication was OK (not the same as an error in the Media API reponse)
+			Integer statusCode = response.getStatusLine().getStatusCode();
+			if(statusCode != 200){
+				httpAgent.getConnectionManager().shutdown();
+				throw new WrapperException(WrapperExceptionCode.HTTP_ERROR_RESPONSE_CODE, "Response code from HTTP server: '" + statusCode + "'");
+			}
+			
+			// Parse the response
+			HttpEntity entity = response.getEntity();
+			buffer = HttpUtils.parseHttpEntity(entity);
 			httpAgent.getConnectionManager().shutdown();
 		}
 		catch(ClientProtocolException cpe){
 			throw new WrapperException(WrapperExceptionCode.CLIENT_PROTOCOL_EXCEPTION, "Exception: '" + cpe + "'");
-		}
-		catch(IOException ioe){
-			throw new WrapperException(WrapperExceptionCode.MAPI_IO_EXCEPTION, "Exception: '" + ioe + "'");
-		}
-		
-		// Make sure the HTTP communication was OK (not the same as an error in the Media API reponse)
-		Integer statusCode = response.getStatusLine().getStatusCode();
-		if(statusCode != 200){
-			throw new WrapperException(WrapperExceptionCode.HTTP_ERROR_RESPONSE_CODE, "Response code from HTTP server: '" + statusCode + "'");
-		}
-		
-		// Parse the response
-		HttpEntity entity = response.getEntity();
-		String buffer;
-		try {
-			buffer = HttpUtils.parseHttpEntity(entity);
 		}
 		catch (IllegalStateException ise) {
 			throw new WrapperException(WrapperExceptionCode.MAPI_ILLEGAL_STATE_RESPONSE, "Exception: '" + ise + "'");

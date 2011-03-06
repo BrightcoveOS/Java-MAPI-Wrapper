@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <project default="main">
 	<property name="release-package-name" value="bc-java-mapi-wrapper"/>
-	<property name="release-package-version" value="3.0.2"/>
+	<property name="release-package-version" value="3.0.3"/>
 	
 	<property name="apache-mime-jar" value="lib/apache-mime4j-0.6.1.jar"/>
 	<property name="bc-commons-catalog-objects-jar" value="lib/bc-commons-catalog-objects-3.0.jar"/>
