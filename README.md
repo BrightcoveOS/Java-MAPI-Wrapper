@@ -8,6 +8,18 @@ This project relies on the [Brightcove Commons open source libraries](https://gi
 Downloads
 =========
 
+**Version 3.0.3**:
+
+This patch fixes a bug when we open a new connection for each request.  Basically it makes sure to fully parse the response before closing the socket.
+
+Library Only:
+
+- [BC Java MAPI Wrapper v3.0.3](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-3.0.3.jar)
+
+Full Download - including Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v3.0.3 with dependencies](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-3.0.3-with-dep.zip)
+
 **Version 3.0.2**:
 
 This patch release allows UpdateVideo to send video fields via JSON even if the field value is null.
