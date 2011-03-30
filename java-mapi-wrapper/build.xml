@@ -1,13 +1,13 @@
 <?xml version="1.0" ?>
 <project default="main">
 	<property name="release-package-name" value="bc-java-mapi-wrapper"/>
-	<property name="release-package-version" value="3.0.3"/>
+	<property name="release-package-version" value="3.0.4"/>
 	
 	<property name="apache-mime-jar" value="lib/apache-mime4j-0.6.1.jar"/>
-	<property name="bc-commons-catalog-objects-jar" value="lib/bc-commons-catalog-objects-3.0.3.jar"/>
-	<property name="bc-commons-collection-utils-jar" value="lib/bc-commons-collection-utils-3.0.3.jar"/>
-	<property name="bc-commons-http-utils-jar" value="lib/bc-commons-http-utils-3.0.3.jar"/>
-	<property name="bc-commons-system-utils-jar" value="lib/bc-commons-system-utils-3.0.3.jar"/>
+	<property name="bc-commons-catalog-objects-jar" value="lib/bc-commons-catalog-objects-3.0.4.jar"/>
+	<property name="bc-commons-collection-utils-jar" value="lib/bc-commons-collection-utils-3.0.4.jar"/>
+	<property name="bc-commons-http-utils-jar" value="lib/bc-commons-http-utils-3.0.4.jar"/>
+	<property name="bc-commons-system-utils-jar" value="lib/bc-commons-system-utils-3.0.4.jar"/>
 	<property name="apache-io-jar" value="lib/commons-io-2.0.1.jar"/>
 	<property name="apache-logging-jar" value="lib/commons-logging-1.1.1.jar"/>
 	<property name="apache-http-client" value="lib/httpclient-4.0.3.jar"/>
