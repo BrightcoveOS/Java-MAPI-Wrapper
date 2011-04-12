@@ -1,13 +1,14 @@
 <?xml version="1.0" ?>
 <project default="main">
 	<property name="release-package-name" value="bc-java-mapi-wrapper"/>
-	<property name="release-package-version" value="3.0.4"/>
+	<property name="release-package-version" value="3.0.5"/>
+	<property name="commons-package-version" value="3.0.5"/>
 	
 	<property name="apache-mime-jar" value="lib/apache-mime4j-0.6.1.jar"/>
-	<property name="bc-commons-catalog-objects-jar" value="lib/bc-commons-catalog-objects-3.0.4.jar"/>
-	<property name="bc-commons-collection-utils-jar" value="lib/bc-commons-collection-utils-3.0.4.jar"/>
-	<property name="bc-commons-http-utils-jar" value="lib/bc-commons-http-utils-3.0.4.jar"/>
-	<property name="bc-commons-system-utils-jar" value="lib/bc-commons-system-utils-3.0.4.jar"/>
+	<property name="bc-commons-catalog-objects-jar" value="lib/bc-commons-catalog-objects-${commons-package-version}.jar"/>
+	<property name="bc-commons-collection-utils-jar" value="lib/bc-commons-collection-utils-${commons-package-version}.jar"/>
+	<property name="bc-commons-http-utils-jar" value="lib/bc-commons-http-utils-${commons-package-version}.jar"/>
+	<property name="bc-commons-system-utils-jar" value="lib/bc-commons-system-utils-${commons-package-version}.jar"/>
 	<property name="apache-io-jar" value="lib/commons-io-2.0.1.jar"/>
 	<property name="apache-logging-jar" value="lib/commons-logging-1.1.1.jar"/>
 	<property name="apache-http-client" value="lib/httpclient-4.0.3.jar"/>
@@ -29,7 +30,7 @@
 		<pathelement location="${json-org-jar}"/>
 	</path>
 	
-	<target name="main" depends="prepare, clean, compile, javadoc, release" description="Main target">
+	<target name="main" depends="prepare, clean, compile, javadoc, release, rezip-all-packages" description="Main target">
 		<echo>Full build complete.</echo>
 	</target>
 	
@@ -43,7 +44,7 @@
 	<target name="clean" description="Clean target">
 		<echo>Cleaning project:</echo>
 		<delete>
-			<fileset dir="release" includes="${release-package-name}.jar"/>
+			<fileset dir="release" includes="**/*"/>
 			<fileset dir="javadoc" includes="**/*"/>
 		</delete>
 		<delete dir="bin/com" />
@@ -77,5 +78,15 @@
 			<fileset dir="bin" includes="**/*"/>
 			<fileset dir="src" includes="**/*"/>
 		</jar>
+	</target>
+	
+	<target name="rezip-all-packages">
+		<zip destfile="release/${release-package-name}-${release-package-version}-with-dep.zip"
+			basedir="release"
+			update="true"
+			excludes="**/*.zip"
+		>
+			<fileset dir="lib" includes="*.jar"/>
+		</zip>
 	</target>
 </project>

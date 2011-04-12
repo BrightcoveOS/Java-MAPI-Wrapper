@@ -8,6 +8,18 @@ This project relies on the [Brightcove Commons open source libraries](https://gi
 Downloads
 =========
 
+**Version 3.0.5**:
+
+This patch fixes a bug in the CuePoint object when serializing to JSON.
+
+Full Download - including Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v3.0.5 with dependencies](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-3.0.5-with-dep.zip)
+
+Library Only:
+
+- [BC Java MAPI Wrapper v3.0.5](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-3.0.5.jar)
+
 **Version 3.0.4**:
 
 This patch fixes a bug when we open a new connection for each request.  Basically it makes sure to fully parse the response before closing the socket.
