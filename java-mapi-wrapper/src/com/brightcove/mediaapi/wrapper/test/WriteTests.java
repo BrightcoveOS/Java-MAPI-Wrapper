@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.apache.http.params.CoreProtocolPNames;
+
 import com.brightcove.commons.catalog.objects.Image;
 import com.brightcove.commons.catalog.objects.Playlist;
 import com.brightcove.commons.catalog.objects.Video;
@@ -15,6 +17,7 @@ import com.brightcove.commons.catalog.objects.enumerations.ImageTypeEnum;
 import com.brightcove.commons.catalog.objects.enumerations.ItemStateEnum;
 import com.brightcove.commons.catalog.objects.enumerations.PlaylistTypeEnum;
 import com.brightcove.commons.catalog.objects.enumerations.UploadStatusEnum;
+import com.brightcove.commons.misc.nvpair.BcHttpParams;
 import com.brightcove.commons.system.commandLine.CommandLineProgram;
 import com.brightcove.mediaapi.exceptions.BrightcoveException;
 import com.brightcove.mediaapi.wrapper.WriteApi;
@@ -301,6 +304,13 @@ public class WriteTests extends CommandLineProgram {
 				usage(be);
 			}
 		}
+		
+		// ****
+		// **** Misc examples...
+		// ****
+		BcHttpParams httpParams = new BcHttpParams();
+		httpParams.addBooleanParam(CoreProtocolPNames.USE_EXPECT_CONTINUE, false);
+		writeApi.setExtraPostParams(httpParams);
 	}
 	
 	/**

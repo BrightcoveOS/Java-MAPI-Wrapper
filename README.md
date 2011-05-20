@@ -8,6 +8,26 @@ This project relies on the [Brightcove Commons open source libraries](https://gi
 Downloads
 =========
 
+**Version 4.0.1**:
+
+This version uses the new major release of the Brightcove Commons libraries.
+It also incorporates the following changes:
+
+- Video object now supports Ad Keys
+- Write API can now specify additional HttpParams to pass on the post method [feature request 2] (https://github.com/BrightcoveOS/Java-MAPI-Wrapper/issues/2)
+
+Full Download - including all Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.0.1 with dependencies](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-4.0.1.zip)
+
+Minimal Download - including only necessary Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.0.1 with minimal dependencies](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-minimal-4.0.1.zip)
+
+Library Only:
+
+- [BC Java MAPI Wrapper v4.0.1](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-4.0.1.jar)
+
 **Version 3.0.5**:
 
 This patch fixes a bug in the CuePoint object when serializing to JSON.

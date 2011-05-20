@@ -1,25 +1,29 @@
 <?xml version="1.0" ?>
 <project default="main">
 	<property name="release-package-name" value="bc-java-mapi-wrapper"/>
-	<property name="release-package-version" value="3.0.4"/>
+	<property name="release-package-version" value="4.0.1"/>
+	<property name="commons-version" value="4.0.1"/>
+	<property name="commons-lib" value="lib/bc-commons-with-dep-${commons-version}"/>
 	
-	<property name="apache-mime-jar" value="lib/apache-mime4j-0.6.1.jar"/>
-	<property name="bc-commons-catalog-objects-jar" value="lib/bc-commons-catalog-objects-3.0.4.jar"/>
-	<property name="bc-commons-collection-utils-jar" value="lib/bc-commons-collection-utils-3.0.4.jar"/>
-	<property name="bc-commons-http-utils-jar" value="lib/bc-commons-http-utils-3.0.4.jar"/>
-	<property name="bc-commons-system-utils-jar" value="lib/bc-commons-system-utils-3.0.4.jar"/>
-	<property name="apache-io-jar" value="lib/commons-io-2.0.1.jar"/>
-	<property name="apache-logging-jar" value="lib/commons-logging-1.1.1.jar"/>
-	<property name="apache-http-client" value="lib/httpclient-4.0.3.jar"/>
-	<property name="apache-http-core-jar" value="lib/httpcore-4.1.jar"/>
-	<property name="apache-http-mime-jar" value="lib/httpmime-4.0.3.jar"/>
-	<property name="json-org-jar" value="lib/json-org.jar"/>
+	<property name="apache-mime-jar"                 value="${commons-lib}/apache-mime4j-0.6.1.jar"/>
+	<property name="bc-commons-catalog-objects-jar"  value="${commons-lib}/bc-commons-catalog-objects-${commons-version}.jar"/>
+	<property name="bc-commons-collection-utils-jar" value="${commons-lib}/bc-commons-collection-utils-${commons-version}.jar"/>
+	<property name="bc-commons-http-utils-jar"       value="${commons-lib}/bc-commons-http-utils-${commons-version}.jar"/>
+	<property name="bc-commons-misc-utils-jar"       value="${commons-lib}/bc-commons-misc-utils-${commons-version}.jar"/>
+	<property name="bc-commons-system-utils-jar"     value="${commons-lib}/bc-commons-system-utils-${commons-version}.jar"/>
+	<property name="apache-io-jar"                   value="${commons-lib}/commons-io-2.0.1.jar"/>
+	<property name="apache-logging-jar"              value="${commons-lib}/commons-logging-1.1.1.jar"/>
+	<property name="apache-http-client"              value="${commons-lib}/httpclient-4.0.3.jar"/>
+	<property name="apache-http-core-jar"            value="${commons-lib}/httpcore-4.1.jar"/>
+	<property name="apache-http-mime-jar"            value="${commons-lib}/httpmime-4.0.3.jar"/>
+	<property name="json-org-jar"                    value="${commons-lib}/json-org.jar"/>
 	
 	<path id="project.class.path">
 		<pathelement location="${apache-mime-jar}"/>
 		<pathelement location="${bc-commons-catalog-objects-jar}"/>
 		<pathelement location="${bc-commons-collection-utils-jar}"/>
 		<pathelement location="${bc-commons-http-utils-jar}"/>
+		<pathelement location="${bc-commons-misc-utils-jar}"/>
 		<pathelement location="${bc-commons-system-utils-jar}"/>
 		<pathelement location="${apache-io-jar}"/>
 		<pathelement location="${apache-logging-jar}"/>
@@ -36,16 +40,14 @@
 	<target name="prepare" description="Prepare target">
 		<echo>Preparing project:</echo>
 		<mkdir dir="bin"/>
-		<mkdir dir="release"/>
-		<mkdir dir="javadoc"/>
 	</target>
 	
 	<target name="clean" description="Clean target">
 		<echo>Cleaning project:</echo>
-		<delete>
-			<fileset dir="release" includes="${release-package-name}.jar"/>
-			<fileset dir="javadoc" includes="**/*"/>
-		</delete>
+		<delete dir="release"/>
+		<mkdir dir="release"/>
+		<delete dir="javadoc"/>
+		<mkdir dir="javadoc"/>
 		<delete dir="bin/com" />
 	</target>
 	
@@ -71,11 +73,68 @@
 		</javadoc>
 	</target>
 	
-	<target name="release" description="Compression target">
+	<target name="release" depends="release-minimal, release-full" description="Releasing packages">
 		<echo>Building jar file:</echo>
 		<jar jarfile="release/${release-package-name}-${release-package-version}.jar" duplicate="fail" whenmanifestonly="fail">
 			<fileset dir="bin" includes="**/*"/>
 			<fileset dir="src" includes="**/*"/>
 		</jar>
+	</target>
+	
+	<target name="release-minimal" description="Compression target">
+		<property name="release-minimal-dir" value="release/${release-package-name}-minimal-${release-package-version}"/>
+		<mkdir dir="${release-minimal-dir}"/>
+		
+		<echo>Building minimal jar file:</echo>
+		<jar jarfile="${release-minimal-dir}/${release-package-name}-${release-package-version}.jar" duplicate="fail" whenmanifestonly="fail">
+			<fileset dir="bin" includes="**/*"/>
+			<fileset dir="src" includes="**/*"/>
+		</jar>
+		<copy todir="${release-minimal-dir}">
+			<fileset dir="${commons-lib}">
+				<include name="apache-mime4j*"/>
+				<include name="apache-mime4j**/*"/>
+				<include name="bc-commons-catalog-objects*"/>
+				<include name="bc-commons-collection-utils*"/>
+				<include name="bc-commons-http-utils*"/>
+				<include name="bc-commons-misc-utils*"/>
+				<include name="bc-commons-system-utils*"/>
+				<include name="commons-io*"/>
+				<include name="commons-io**/*"/>
+				<include name="commons-logging*"/>
+				<include name="commons-logging**/*"/>
+				<include name="httpclient*"/>
+				<include name="httpcore*"/>
+				<include name="httpmime*"/>
+				<include name="json-org*"/>
+				<include name="httpcomponents-**/*"/>
+			</fileset>
+		</copy>
+		<zip destfile="${release-minimal-dir}/../${release-package-name}-minimal-${release-package-version}.zip">
+			<fileset dir="release">
+				<include name="${release-package-name}-minimal-${release-package-version}/**/*"/>
+			</fileset>
+		</zip>
+	</target>
+	
+	<target name="release-full" description="Compression target">
+		<property name="release-full-dir" value="release/${release-package-name}-${release-package-version}"/>
+		<mkdir dir="${release-full-dir}"/>
+		
+		<echo>Building full jar file:</echo>
+		<jar jarfile="${release-full-dir}/${release-package-name}-${release-package-version}.jar" duplicate="fail" whenmanifestonly="fail">
+			<fileset dir="bin" includes="**/*"/>
+			<fileset dir="src" includes="**/*"/>
+		</jar>
+		<copy todir="${release-full-dir}">
+			<fileset dir="${commons-lib}">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+		<zip destfile="${release-full-dir}/../${release-package-name}-${release-package-version}.zip">
+			<fileset dir="release">
+				<include name="${release-package-name}-${release-package-version}/**/*"/>
+			</fileset>
+		</zip>
 	</target>
 </project>

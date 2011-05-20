@@ -39,6 +39,7 @@ import com.brightcove.commons.catalog.objects.enumerations.EncodeToEnum;
 import com.brightcove.commons.catalog.objects.enumerations.UploadStatusEnum;
 import com.brightcove.commons.catalog.objects.enumerations.VideoFieldEnum;
 import com.brightcove.commons.http.HttpUtils;
+import com.brightcove.commons.misc.nvpair.BcHttpParams;
 import com.brightcove.mediaapi.exceptions.BrightcoveException;
 import com.brightcove.mediaapi.exceptions.MediaApiException;
 import com.brightcove.mediaapi.exceptions.WrapperException;
@@ -82,6 +83,8 @@ public class WriteApi {
 	private Integer    writePort;
 	private String     writePath;
 	private HttpClient httpAgent;
+	
+	private BcHttpParams httpParams;
 	
 	private static final String  WRITE_API_DEFAULT_SCHEME = "http";
 	private static final String  WRITE_API_DEFAULT_HOST   = "api.brightcove.com";
@@ -154,6 +157,7 @@ public class WriteApi {
 		log       = null;
 		charSet   = "UTF-8";
 		// httpAgent = new DefaultHttpClient();
+		httpParams = null;
 		
 		writeProtocolScheme = WRITE_API_DEFAULT_SCHEME;
 		writeHost           = WRITE_API_DEFAULT_HOST;
@@ -195,6 +199,10 @@ public class WriteApi {
 		HttpPost        method   = new HttpPost(uri);
 		MultipartEntity entityIn = new MultipartEntity();
 		FileBody        fileBody = null;
+		
+		if(httpParams != null){
+			method.setParams(httpParams.generateHttpParams());
+		}
 		
 		if(file != null){
 			fileBody = new FileBody(file);
@@ -940,6 +948,42 @@ public class WriteApi {
 		}
 		
 		return response;
+	}
+	
+	/**
+	 * <p>
+	 *    This shouldn't commonly be used, but before the post request is
+	 *    submitted, these parameters can be added to the method.
+	 * </p>
+	 * 
+	 * <p>
+	 *    This is roughly analagous to:<br/>
+	 *    &nbsp;&nbsp;&nbsp;&nbsp;HttpPost method = new HttpPost(uri);
+	 *    &nbsp;&nbsp;&nbsp;&nbsp;method.getParams().setParameter(key, value);
+	 * </p>
+	 * 
+	 * @param httpParams Extra parameters to attach to the post method
+	 */
+	public void setExtraPostParams(BcHttpParams httpParams){
+		this.httpParams = httpParams;
+	}
+	
+	/**
+	 * <p>
+	 *    This shouldn't commonly be used, but before the post request is
+	 *    submitted, these parameters can be added to the method.
+	 * </p>
+	 * 
+	 * <p>
+	 *    This is roughly analagous to:<br/>
+	 *    &nbsp;&nbsp;&nbsp;&nbsp;HttpPost method = new HttpPost(uri);
+	 *    &nbsp;&nbsp;&nbsp;&nbsp;method.getParams().setParameter(key, value);
+	 * </p>
+	 * 
+	 * @return Extra parameters to attach to the post method
+	 */
+	public BcHttpParams getExtraPostParams(){
+		return httpParams;
 	}
 }
 
