@@ -17,7 +17,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIUtils;
 import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +31,8 @@ import com.brightcove.commons.catalog.objects.enumerations.SortOrderTypeEnum;
 import com.brightcove.commons.catalog.objects.enumerations.VideoFieldEnum;
 import com.brightcove.commons.catalog.objects.enumerations.VideoStateFilterEnum;
 import com.brightcove.commons.collection.CollectionUtils;
+import com.brightcove.commons.http.DefaultHttpClientFactory;
+import com.brightcove.commons.http.HttpClientFactory;
 import com.brightcove.commons.http.HttpUtils;
 import com.brightcove.mediaapi.exceptions.BrightcoveException;
 import com.brightcove.mediaapi.exceptions.MediaApiException;
@@ -69,13 +70,14 @@ import com.brightcove.mediaapi.exceptions.WrapperExceptionCode;
  *
  */
 public class ReadApi {
-	private Logger     log;
-	private String     charSet;
-	private String     readProtocolScheme;
-	private String     readHost;
-	private Integer    readPort;
-	private String     readPath;
-	private HttpClient httpAgent;
+	private Logger  log;
+	private String  charSet;
+	private String  readProtocolScheme;
+	private String  readHost;
+	private Integer readPort;
+	private String  readPath;
+	
+	private HttpClientFactory clientFactory;
 	
 	private Boolean    enableUds;
 	
@@ -159,7 +161,6 @@ public class ReadApi {
 	private void init(){
 		log       = null;
 		charSet   = "UTF-8";
-		// httpAgent = new DefaultHttpClient();
 		
 		enableUds = false;
 		
@@ -167,6 +168,8 @@ public class ReadApi {
 		readHost           = READ_API_DEFAULT_HOST;
 		readPort           = READ_API_DEFAULT_PORT;
 		readPath           = READ_API_DEFAULT_PATH;
+		
+		clientFactory = new DefaultHttpClientFactory();
 	}
 	
 	/**
@@ -182,6 +185,15 @@ public class ReadApi {
 		this.readHost           = host;
 		this.readPort           = port;
 		this.readPath           = path;
+	}
+	
+	/**
+	 * <p>Overrides the standard factory used to create HTTPClients to connect to the Read API Server.</p>
+	 * 
+	 * @param clientFactory HttpClientFactory to use to generate HttpClient objects
+	 */
+	public void OverrideHttpClientFactory(HttpClientFactory clientFactory){
+		this.clientFactory = clientFactory;
 	}
 	
 	/**
@@ -233,7 +245,7 @@ public class ReadApi {
 		HttpResponse response = null;
 		String       buffer;
 		try{
-			httpAgent = new DefaultHttpClient();
+			HttpClient httpAgent = clientFactory.getHttpClient();
 			response = httpAgent.execute(httpGet);
 			
 			// Make sure the HTTP communication was OK (not the same as an error in the Media API reponse)

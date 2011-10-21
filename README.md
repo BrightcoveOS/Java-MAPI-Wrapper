@@ -8,6 +8,27 @@ This project relies on the [Brightcove Commons open source libraries](https://gi
 Downloads
 =========
 
+**Version 4.0.3**:
+
+This version uses the new major release of the Brightcove Commons libraries.
+This allows both the read and write api to specify an HttpClientFactory, which
+can dictate how HttpClients are created each time a method is called.
+
+This is especially necessary if a user wishes to use https instead of http to
+communicate with the Media API.
+
+Full Download - including all Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.0.3 with dependencies](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-4.0.3.zip)
+
+Minimal Download - including only necessary Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.0.3 with minimal dependencies](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-minimal-4.0.3.zip)
+
+Library Only:
+
+- [BC Java MAPI Wrapper v4.0.3](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-4.0.3.jar)
+
 **Version 4.0.1**:
 
 This version uses the new major release of the Brightcove Commons libraries.

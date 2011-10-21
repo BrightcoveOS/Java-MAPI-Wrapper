@@ -27,7 +27,6 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +37,8 @@ import com.brightcove.commons.catalog.objects.Video;
 import com.brightcove.commons.catalog.objects.enumerations.EncodeToEnum;
 import com.brightcove.commons.catalog.objects.enumerations.UploadStatusEnum;
 import com.brightcove.commons.catalog.objects.enumerations.VideoFieldEnum;
+import com.brightcove.commons.http.DefaultHttpClientFactory;
+import com.brightcove.commons.http.HttpClientFactory;
 import com.brightcove.commons.http.HttpUtils;
 import com.brightcove.commons.misc.nvpair.BcHttpParams;
 import com.brightcove.mediaapi.exceptions.BrightcoveException;
@@ -76,13 +77,15 @@ import com.brightcove.mediaapi.exceptions.WrapperExceptionCode;
  *
  */
 public class WriteApi {
-	private Logger     log;
-	private String     charSet;
-	private String     writeProtocolScheme;
-	private String     writeHost;
-	private Integer    writePort;
-	private String     writePath;
-	private HttpClient httpAgent;
+	private Logger  log;
+	private String  charSet;
+	private String  writeProtocolScheme;
+	private String  writeHost;
+	private Integer writePort;
+	private String  writePath;
+	
+	// private HttpClient httpAgent;
+	private HttpClientFactory clientFactory;
 	
 	private BcHttpParams httpParams;
 	
@@ -156,13 +159,38 @@ public class WriteApi {
 	private void init(){
 		log       = null;
 		charSet   = "UTF-8";
-		// httpAgent = new DefaultHttpClient();
 		httpParams = null;
 		
 		writeProtocolScheme = WRITE_API_DEFAULT_SCHEME;
 		writeHost           = WRITE_API_DEFAULT_HOST;
 		writePort           = WRITE_API_DEFAULT_PORT;
 		writePath           = WRITE_API_DEFAULT_PATH;
+		
+		clientFactory = new DefaultHttpClientFactory();
+	}
+	
+	/**
+	 * <p>Overrides the standard Write API Server settings to make calls against a test/staging server.</p>
+	 * 
+	 * @param scheme Protocol to use for call (usually http)
+	 * @param host Host/IP address to call
+	 * @param port Port to call on server
+	 * @param path Path to API application on server
+	 */
+	public void OverrideWriteApiServerSettings(String scheme, String host, Integer port, String path){
+		this.writeProtocolScheme = scheme;
+		this.writeHost           = host;
+		this.writePort           = port;
+		this.writePath           = path;
+	}
+	
+	/**
+	 * <p>Overrides the standard factory used to create HTTPClients to connect to the Write API Server.</p>
+	 * 
+	 * @param clientFactory HttpClientFactory to use to generate HttpClient objects
+	 */
+	public void OverrideHttpClientFactory(HttpClientFactory clientFactory){
+		this.clientFactory = clientFactory;
 	}
 	
 	/**
@@ -223,7 +251,7 @@ public class WriteApi {
 		HttpResponse response = null;
 		String       buffer;
 		try{
-			httpAgent = new DefaultHttpClient();
+			HttpClient httpAgent = clientFactory.getHttpClient();
 			response = httpAgent.execute(method);
 			
 			// Make sure the HTTP communication was OK (not the same as an error in the Media API reponse)
