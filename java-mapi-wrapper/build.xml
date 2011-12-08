@@ -1,9 +1,11 @@
 <?xml version="1.0" ?>
 <project default="main">
 	<property name="release-package-name" value="bc-java-mapi-wrapper"/>
-	<property name="release-package-version" value="4.0.3"/>
-	<property name="commons-version" value="4.0.3"/>
+	<property name="release-package-version" value="4.1.0"/>
+	<property name="commons-version" value="4.1.0"/>
 	<property name="commons-lib" value="lib/bc-commons-with-dep-${commons-version}"/>
+	
+	<property name="ext-project-commons-release-dir" value="../../../java-commons/Java-Commons/release-build/release/bc-commons-with-dep"/>
 	
 	<property name="apache-mime-jar"                 value="${commons-lib}/apache-mime4j-0.6.1.jar"/>
 	<property name="bc-commons-catalog-objects-jar"  value="${commons-lib}/bc-commons-catalog-objects-${commons-version}.jar"/>
@@ -40,6 +42,16 @@
 	<target name="prepare" description="Prepare target">
 		<echo>Preparing project:</echo>
 		<mkdir dir="bin"/>
+		
+		<echo>Copying commons library from external project</echo>
+		<delete dir="lib/bc-commons-with-dep-${commons-version}" failonerror="false" verbose="false"/>
+		<delete file="lib/bc-commons-with-dep-${commons-version}.zip" failonerror="false" verbose="false"/>
+		<copy todir="lib">
+			<fileset dir="${ext-project-commons-release-dir}">
+				<include name="bc-commons-with-dep-${commons-version}.zip*"/>
+			</fileset>
+		</copy>
+		<unzip src="lib/bc-commons-with-dep-${commons-version}.zip" dest="lib"/>
 	</target>
 	
 	<target name="clean" description="Clean target">

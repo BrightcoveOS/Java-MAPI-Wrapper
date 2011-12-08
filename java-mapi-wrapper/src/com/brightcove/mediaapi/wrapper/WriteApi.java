@@ -42,6 +42,7 @@ import com.brightcove.commons.http.HttpClientFactory;
 import com.brightcove.commons.http.HttpUtils;
 import com.brightcove.commons.misc.nvpair.BcHttpParams;
 import com.brightcove.mediaapi.exceptions.BrightcoveException;
+import com.brightcove.mediaapi.exceptions.BrightcoveExceptionHandler;
 import com.brightcove.mediaapi.exceptions.MediaApiException;
 import com.brightcove.mediaapi.exceptions.WrapperException;
 import com.brightcove.mediaapi.exceptions.WrapperExceptionCode;
@@ -93,6 +94,8 @@ public class WriteApi {
 	private static final String  WRITE_API_DEFAULT_HOST   = "api.brightcove.com";
 	private static final Integer WRITE_API_DEFAULT_PORT   = 80;
 	private static final String  WRITE_API_DEFAULT_PATH   = "/services/post";
+	
+	private BrightcoveExceptionHandler exceptionHandler;
 	
 	/**
 	 * <p>Default constructor</p>
@@ -167,6 +170,8 @@ public class WriteApi {
 		writePath           = WRITE_API_DEFAULT_PATH;
 		
 		clientFactory = new DefaultHttpClientFactory();
+		
+		exceptionHandler = null;
 	}
 	
 	/**
@@ -326,6 +331,26 @@ public class WriteApi {
 	 * </ul>
 	 */
 	public Long CreateVideo(String writeToken, Video video, String filename, EncodeToEnum encodeTo, Boolean createMultipleRenditions, Boolean preserveSourceRendition, Boolean h264NoProcessing) throws BrightcoveException {
+		try{
+			return _CreateVideo(writeToken, video, filename, encodeTo, createMultipleRenditions, preserveSourceRendition, h264NoProcessing);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "CreateVideo")){
+					return CreateVideo(writeToken, video, filename, encodeTo, createMultipleRenditions, preserveSourceRendition, h264NoProcessing);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of CreateVideo
+	private Long _CreateVideo(String writeToken, Video video, String filename, EncodeToEnum encodeTo, Boolean createMultipleRenditions, Boolean preserveSourceRendition, Boolean h264NoProcessing) throws BrightcoveException {
 		if(log != null){
 			if(video.getCreationDate() != null){
 				log.warning("Field \"Creation Date\" is set on the video, but this can not be set by the Media API.  This will be passed through to the Media API, but it will be ignored.");
@@ -444,6 +469,26 @@ public class WriteApi {
 	 * </ul>
 	 */
 	public Image AddImage(String writeToken, Image image, String filename, Long videoId, String videoReferenceId, Boolean resize) throws BrightcoveException {
+		try{
+			return _AddImage(writeToken, image, filename, videoId, videoReferenceId, resize);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "AddImage")){
+					return AddImage(writeToken, image, filename, videoId, videoReferenceId, resize);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of AddImage
+	private Image _AddImage(String writeToken, Image image, String filename, Long videoId, String videoReferenceId, Boolean resize) throws BrightcoveException {
 		File file    = null;
 		Long maxSize = 0l;
 		if(filename != null){
@@ -524,6 +569,26 @@ public class WriteApi {
 	 * </ul>
 	 */
 	public UploadStatusEnum GetUploadStatus(String writeToken, Long videoId, String referenceId) throws BrightcoveException {
+		try{
+			return _GetUploadStatus(writeToken, videoId, referenceId);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "GetUploadStatus")){
+					return GetUploadStatus(writeToken, videoId, referenceId);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of AddImage
+	private UploadStatusEnum _GetUploadStatus(String writeToken, Long videoId, String referenceId) throws BrightcoveException {
 		File file = null;
 		
 		JSONObject json = null;
@@ -600,6 +665,26 @@ public class WriteApi {
 	 * </ul>
 	 */
 	public JSONObject DeleteVideo(String writeToken, Long videoId, String referenceId, Boolean cascade, Boolean deleteShares) throws BrightcoveException {
+		try{
+			return _DeleteVideo(writeToken, videoId, referenceId, cascade, deleteShares);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "DeleteVideo")){
+					return DeleteVideo(writeToken, videoId, referenceId, cascade, deleteShares);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of AddImage
+	public JSONObject _DeleteVideo(String writeToken, Long videoId, String referenceId, Boolean cascade, Boolean deleteShares) throws BrightcoveException {
 		File file = null;
 		
 		JSONObject json = null;
@@ -657,7 +742,27 @@ public class WriteApi {
 	 * </ul>
 	 */
 	public List<Long> ShareVideo(String writeToken, Long videoId, Boolean autoAccept, List<Long> shareeAccountIds) throws BrightcoveException {
-		return ShareVideo(writeToken, videoId, autoAccept, shareeAccountIds, false);
+		try{
+			return _ShareVideo(writeToken, videoId, autoAccept, shareeAccountIds);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "ShareVideo")){
+					return ShareVideo(writeToken, videoId, autoAccept, shareeAccountIds);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of AddImage
+	public List<Long> _ShareVideo(String writeToken, Long videoId, Boolean autoAccept, List<Long> shareeAccountIds) throws BrightcoveException {
+		return _ShareVideo(writeToken, videoId, autoAccept, shareeAccountIds, false);
 	}
 	
 	/**
@@ -677,6 +782,26 @@ public class WriteApi {
 	 * </ul>
 	 */
 	public List<Long> ShareVideo(String writeToken, Long videoId, Boolean autoAccept, List<Long> shareeAccountIds, Boolean forceReshare) throws BrightcoveException {
+		try{
+			return _ShareVideo(writeToken, videoId, autoAccept, shareeAccountIds, forceReshare);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "ShareVideo")){
+					return ShareVideo(writeToken, videoId, autoAccept, shareeAccountIds, forceReshare);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of AddImage
+	public List<Long> _ShareVideo(String writeToken, Long videoId, Boolean autoAccept, List<Long> shareeAccountIds, Boolean forceReshare) throws BrightcoveException {
 		File file = null;
 		
 		JSONObject json = null;
@@ -742,6 +867,26 @@ public class WriteApi {
 	 * </ul>
 	 */
 	public Video UpdateVideo(String writeToken, Video video) throws BrightcoveException {
+		try{
+			return _UpdateVideo(writeToken, video);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "UpdateVideo")){
+					return UpdateVideo(writeToken, video);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of AddImage
+	public Video _UpdateVideo(String writeToken, Video video) throws BrightcoveException {
 		EnumSet<VideoFieldEnum> includeNullFields = VideoFieldEnum.CreateEmptyEnumSet();
 		return UpdateVideo(writeToken, video, includeNullFields);
 	}
@@ -761,6 +906,26 @@ public class WriteApi {
 	 * </ul>
 	 */
 	public Video UpdateVideo(String writeToken, Video video, EnumSet<VideoFieldEnum> includeNullFields) throws BrightcoveException {
+		try{
+			return _UpdateVideo(writeToken, video, includeNullFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "UpdateVideo")){
+					return UpdateVideo(writeToken, video, includeNullFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of AddImage
+	public Video _UpdateVideo(String writeToken, Video video, EnumSet<VideoFieldEnum> includeNullFields) throws BrightcoveException {
 		File file = null;
 		
 		JSONObject json = null;
@@ -813,6 +978,26 @@ public class WriteApi {
 	 * </ul>
 	 */
 	public Long CreatePlaylist(String writeToken, Playlist playlist) throws BrightcoveException {
+		try{
+			return _CreatePlaylist(writeToken, playlist);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "CreatePlaylist")){
+					return CreatePlaylist(writeToken, playlist);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of AddImage
+	public Long _CreatePlaylist(String writeToken, Playlist playlist) throws BrightcoveException {
 		if(log != null){
 			if(playlist.getAccountId() != null){
 				log.warning("Field \"Account Id\" is set on the playlist, but this can not be set by the Media API.  This will be passed through to the Media API, but it will be ignored.");
@@ -877,6 +1062,26 @@ public class WriteApi {
 	 * </ul>
 	 */
 	public Playlist UpdatePlaylist(String writeToken, Playlist playlist) throws BrightcoveException {
+		try{
+			return _UpdatePlaylist(writeToken, playlist);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "UpdatePlaylist")){
+					return UpdatePlaylist(writeToken, playlist);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of AddImage
+	public Playlist _UpdatePlaylist(String writeToken, Playlist playlist) throws BrightcoveException {
 		if(log != null){
 			if(playlist.getAccountId() != null){
 				log.warning("Field \"Account Id\" is set on the playlist, but this can not be set by the Media API.  This will be passed through to the Media API, but it will be ignored.");
@@ -940,6 +1145,26 @@ public class WriteApi {
 	 * </ul>
 	 */
 	public JSONObject DeletePlaylist(String writeToken, Long playlistId, String referenceId, Boolean cascade) throws BrightcoveException {
+		try{
+			return _DeletePlaylist(writeToken, playlistId, referenceId, cascade);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "DeletePlaylist")){
+					return DeletePlaylist(writeToken, playlistId, referenceId, cascade);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of AddImage
+	public JSONObject _DeletePlaylist(String writeToken, Long playlistId, String referenceId, Boolean cascade) throws BrightcoveException {
 		File file    = null;
 		
 		JSONObject json = null;
@@ -1013,6 +1238,10 @@ public class WriteApi {
 	public BcHttpParams getExtraPostParams(){
 		return httpParams;
 	}
+	
+	public void setBrightcoveExceptionHandler(BrightcoveExceptionHandler exceptionHandler){
+		this.exceptionHandler = exceptionHandler;
+	}
 }
 
 /**
@@ -1062,4 +1291,3 @@ class GenerateFileData {
 		return result;
 	}
 }
-

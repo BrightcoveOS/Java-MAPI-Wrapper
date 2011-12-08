@@ -13,6 +13,29 @@ New - [JavaDocs](http://brightcoveos.github.com/Java-MAPI-Wrapper/javadoc/)
 Downloads
 =========
 
+**Version 4.1.0**:
+
+This version adds adds two major new features:
+
+- Use the new 4.1.0 commons library to allow video serialization to/from XML
+- Allow the WriteApi to specify an "ExceptionHandler" object (ReadApi support coming soon)
+
+The ExceptionHandler object basically allows a user's custom code determine
+whether or not a command should be retried if an exception is thrown.
+
+Full Download - including all Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.1.0 with dependencies](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-4.1.0.zip)
+
+Minimal Download - including only necessary Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.1.0 with minimal dependencies](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-minimal-4.1.0.zip)
+
+Library Only:
+
+- [BC Java MAPI Wrapper v4.1.0](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-4.1.0.jar)
+
+
 **Version 4.0.3**:
 
 This version uses the new major release of the Brightcove Commons libraries.
