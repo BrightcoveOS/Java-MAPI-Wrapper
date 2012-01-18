@@ -587,7 +587,7 @@ public class WriteApi {
 		}
 	}
 	
-	// Internal version of AddImage
+	// Internal version of GetUploadStatus
 	private UploadStatusEnum _GetUploadStatus(String writeToken, Long videoId, String referenceId) throws BrightcoveException {
 		File file = null;
 		
@@ -683,8 +683,8 @@ public class WriteApi {
 		}
 	}
 	
-	// Internal version of AddImage
-	public JSONObject _DeleteVideo(String writeToken, Long videoId, String referenceId, Boolean cascade, Boolean deleteShares) throws BrightcoveException {
+	// Internal version of DeleteVideo
+	private JSONObject _DeleteVideo(String writeToken, Long videoId, String referenceId, Boolean cascade, Boolean deleteShares) throws BrightcoveException {
 		File file = null;
 		
 		JSONObject json = null;
@@ -760,8 +760,8 @@ public class WriteApi {
 		}
 	}
 	
-	// Internal version of AddImage
-	public List<Long> _ShareVideo(String writeToken, Long videoId, Boolean autoAccept, List<Long> shareeAccountIds) throws BrightcoveException {
+	// Internal version of ShareVideo
+	private List<Long> _ShareVideo(String writeToken, Long videoId, Boolean autoAccept, List<Long> shareeAccountIds) throws BrightcoveException {
 		return _ShareVideo(writeToken, videoId, autoAccept, shareeAccountIds, false);
 	}
 	
@@ -800,8 +800,8 @@ public class WriteApi {
 		}
 	}
 	
-	// Internal version of AddImage
-	public List<Long> _ShareVideo(String writeToken, Long videoId, Boolean autoAccept, List<Long> shareeAccountIds, Boolean forceReshare) throws BrightcoveException {
+	// Internal version of ShareVideo
+	private List<Long> _ShareVideo(String writeToken, Long videoId, Boolean autoAccept, List<Long> shareeAccountIds, Boolean forceReshare) throws BrightcoveException {
 		File file = null;
 		
 		JSONObject json = null;
@@ -885,8 +885,8 @@ public class WriteApi {
 		}
 	}
 	
-	// Internal version of AddImage
-	public Video _UpdateVideo(String writeToken, Video video) throws BrightcoveException {
+	// Internal version of UpdateVideo
+	private Video _UpdateVideo(String writeToken, Video video) throws BrightcoveException {
 		EnumSet<VideoFieldEnum> includeNullFields = VideoFieldEnum.CreateEmptyEnumSet();
 		return UpdateVideo(writeToken, video, includeNullFields);
 	}
@@ -924,8 +924,8 @@ public class WriteApi {
 		}
 	}
 	
-	// Internal version of AddImage
-	public Video _UpdateVideo(String writeToken, Video video, EnumSet<VideoFieldEnum> includeNullFields) throws BrightcoveException {
+	// Internal version of UpdateVideo
+	private Video _UpdateVideo(String writeToken, Video video, EnumSet<VideoFieldEnum> includeNullFields) throws BrightcoveException {
 		File file = null;
 		
 		JSONObject json = null;
@@ -996,8 +996,8 @@ public class WriteApi {
 		}
 	}
 	
-	// Internal version of AddImage
-	public Long _CreatePlaylist(String writeToken, Playlist playlist) throws BrightcoveException {
+	// Internal version of CreatePlaylist
+	private Long _CreatePlaylist(String writeToken, Playlist playlist) throws BrightcoveException {
 		if(log != null){
 			if(playlist.getAccountId() != null){
 				log.warning("Field \"Account Id\" is set on the playlist, but this can not be set by the Media API.  This will be passed through to the Media API, but it will be ignored.");
@@ -1080,8 +1080,8 @@ public class WriteApi {
 		}
 	}
 	
-	// Internal version of AddImage
-	public Playlist _UpdatePlaylist(String writeToken, Playlist playlist) throws BrightcoveException {
+	// Internal version of UpdatePlaylist
+	private Playlist _UpdatePlaylist(String writeToken, Playlist playlist) throws BrightcoveException {
 		if(log != null){
 			if(playlist.getAccountId() != null){
 				log.warning("Field \"Account Id\" is set on the playlist, but this can not be set by the Media API.  This will be passed through to the Media API, but it will be ignored.");
@@ -1163,8 +1163,8 @@ public class WriteApi {
 		}
 	}
 	
-	// Internal version of AddImage
-	public JSONObject _DeletePlaylist(String writeToken, Long playlistId, String referenceId, Boolean cascade) throws BrightcoveException {
+	// Internal version of DeletePlaylist
+	private JSONObject _DeletePlaylist(String writeToken, Long playlistId, String referenceId, Boolean cascade) throws BrightcoveException {
 		File file    = null;
 		
 		JSONObject json = null;

@@ -35,6 +35,7 @@ import com.brightcove.commons.http.DefaultHttpClientFactory;
 import com.brightcove.commons.http.HttpClientFactory;
 import com.brightcove.commons.http.HttpUtils;
 import com.brightcove.mediaapi.exceptions.BrightcoveException;
+import com.brightcove.mediaapi.exceptions.BrightcoveExceptionHandler;
 import com.brightcove.mediaapi.exceptions.MediaApiException;
 import com.brightcove.mediaapi.exceptions.WrapperException;
 import com.brightcove.mediaapi.exceptions.WrapperExceptionCode;
@@ -88,6 +89,8 @@ public class ReadApi {
 	
 	private static final Integer MAX_VIDEOS_PER_PAGE    = 100;
 	private static final Integer MAX_PLAYLISTS_PER_PAGE = 100;
+	
+	private BrightcoveExceptionHandler exceptionHandler;
 	
 	/**
 	 * <p>Default constructor</p>
@@ -170,6 +173,8 @@ public class ReadApi {
 		readPath           = READ_API_DEFAULT_PATH;
 		
 		clientFactory = new DefaultHttpClientFactory();
+		
+		exceptionHandler = null;
 	}
 	
 	/**
@@ -317,6 +322,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Video FindVideoById(String readToken, Long videoId, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
+		try{
+			return _FindVideoById(readToken, videoId, videoFields, customFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "FindVideoById")){
+					return FindVideoById(readToken, videoId, videoFields, customFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of FindVideoById
+	private Video _FindVideoById(String readToken, Long videoId, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		
 		parameters.add(new BasicNameValuePair("command",  "find_video_by_id"));
@@ -365,6 +390,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Video FindVideoByIdUnfiltered(String readToken, Long videoId, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
+		try{
+			return _FindVideoByIdUnfiltered(readToken, videoId, videoFields, customFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "FindVideoByIdUnfiltered")){
+					return FindVideoByIdUnfiltered(readToken, videoId, videoFields, customFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of FindVideoByIdUnfiltered
+	private Video _FindVideoByIdUnfiltered(String readToken, Long videoId, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		
 		parameters.add(new BasicNameValuePair("command", "find_video_by_id_unfiltered"));
@@ -418,6 +463,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Videos FindAllVideos(String readToken, Integer pageSize, Integer pageNumber, SortByTypeEnum sortBy, SortOrderTypeEnum sortOrderType, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
+		try{
+			return _FindAllVideos(readToken, pageSize, pageNumber, sortBy, sortOrderType, videoFields, customFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "FindAllVideos")){
+					return FindAllVideos(readToken, pageSize, pageNumber, sortBy, sortOrderType, videoFields, customFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of FindAllVideos
+	private Videos _FindAllVideos(String readToken, Integer pageSize, Integer pageNumber, SortByTypeEnum sortBy, SortOrderTypeEnum sortOrderType, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
 		if(pageSize > MAX_VIDEOS_PER_PAGE){
 			throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_TOO_MANY_VIDEOS_PER_PAGE, "User error - requested " + pageSize + " videos per page; maximum allowed is " + MAX_VIDEOS_PER_PAGE + " videos per page.");
 		}
@@ -481,6 +546,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Videos FindRelatedVideos(String readToken, Long videoId, String referenceId, Integer pageSize, Integer pageNumber, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
+		try{
+			return _FindRelatedVideos(readToken, videoId, referenceId, pageSize, pageNumber, videoFields, customFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "FindRelatedVideos")){
+					return FindRelatedVideos(readToken, videoId, referenceId, pageSize, pageNumber, videoFields, customFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of FindRelatedVideos
+	private Videos _FindRelatedVideos(String readToken, Long videoId, String referenceId, Integer pageSize, Integer pageNumber, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
 		if(pageSize > MAX_VIDEOS_PER_PAGE){
 			throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_TOO_MANY_VIDEOS_PER_PAGE, "User error - requested " + pageSize + " videos per page; maximum allowed is " + MAX_VIDEOS_PER_PAGE + " videos per page.");
 		}
@@ -544,6 +629,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Videos FindVideosByIds(String readToken, Set<Long> videoIds, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
+		try{
+			return _FindVideosByIds(readToken, videoIds, videoFields, customFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "FindVideosByIds")){
+					return FindVideosByIds(readToken, videoIds, videoFields, customFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of FindVideosByIds
+	private Videos _FindVideosByIds(String readToken, Set<Long> videoIds, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		
 		parameters.add(new BasicNameValuePair("command",  "find_videos_by_ids"));
@@ -593,6 +698,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Videos FindVideosByIdsUnfiltered(String readToken, Set<Long> videoIds, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
+		try{
+			return _FindVideosByIdsUnfiltered(readToken, videoIds, videoFields, customFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "FindVideosByIdsUnfiltered")){
+					return FindVideosByIdsUnfiltered(readToken, videoIds, videoFields, customFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of FindVideosByIdsUnfiltered
+	private Videos _FindVideosByIdsUnfiltered(String readToken, Set<Long> videoIds, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		
 		parameters.add(new BasicNameValuePair("command", "find_videos_by_ids_unfiltered"));
@@ -643,6 +768,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Video FindVideoByReferenceId(String readToken, String referenceId, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
+		try{
+			return _FindVideoByReferenceId(readToken, referenceId, videoFields, customFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "FindVideoByReferenceId")){
+					return FindVideoByReferenceId(readToken, referenceId, videoFields, customFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of FindVideoByReferenceId
+	private Video _FindVideoByReferenceId(String readToken, String referenceId, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		
 		parameters.add(new BasicNameValuePair("command",  "find_video_by_reference_id"));
@@ -691,6 +836,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Video FindVideoByReferenceIdUnfiltered(String readToken, String referenceId, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
+		try{
+			return _FindVideoByReferenceIdUnfiltered(readToken, referenceId, videoFields, customFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "FindVideoByReferenceIdUnfiltered")){
+					return FindVideoByReferenceIdUnfiltered(readToken, referenceId, videoFields, customFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of FindVideoByReferenceIdUnfiltered
+	private Video _FindVideoByReferenceIdUnfiltered(String readToken, String referenceId, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		
 		parameters.add(new BasicNameValuePair("command", "find_video_by_reference_id_unfiltered"));
@@ -739,6 +904,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Videos FindVideosByReferenceIdsUnfiltered(String readToken, Set<String> referenceIds, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
+		try{
+			return _FindVideosByReferenceIdsUnfiltered(readToken, referenceIds, videoFields, customFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "FindVideosByReferenceIdsUnfiltered")){
+					return FindVideosByReferenceIdsUnfiltered(readToken, referenceIds, videoFields, customFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of FindVideosByReferenceIdsUnfiltered
+	private Videos _FindVideosByReferenceIdsUnfiltered(String readToken, Set<String> referenceIds, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
 		for(String referenceId : referenceIds){
 			if(referenceId.contains(",")){
 				throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_REFERENCE_ID_WITH_COMMA, "Reference Id '" + referenceId + "' contained a comma.");
@@ -795,6 +980,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Videos FindVideosByReferenceIds(String readToken, Set<String> referenceIds, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
+		try{
+			return _FindVideosByReferenceIds(readToken, referenceIds, videoFields, customFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "FindVideosByReferenceIds")){
+					return FindVideosByReferenceIds(readToken, referenceIds, videoFields, customFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of FindVideosByReferenceIds
+	private Videos _FindVideosByReferenceIds(String readToken, Set<String> referenceIds, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
 		for(String referenceId : referenceIds){
 			if(referenceId.contains(",")){
 				throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_REFERENCE_ID_WITH_COMMA, "Reference Id '" + referenceId + "' contained a comma.");
@@ -855,6 +1060,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Videos FindVideosByUserId(String readToken, String userId, Integer pageSize, Integer pageNumber, SortByTypeEnum sortBy, SortOrderTypeEnum sortOrderType, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
+		try{
+			return _FindVideosByUserId(readToken, userId, pageSize, pageNumber, sortBy, sortOrderType, videoFields, customFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "FindVideosByUserId")){
+					return FindVideosByUserId(readToken, userId, pageSize, pageNumber, sortBy, sortOrderType, videoFields, customFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of FindVideosByUserId
+	private Videos _FindVideosByUserId(String readToken, String userId, Integer pageSize, Integer pageNumber, SortByTypeEnum sortBy, SortOrderTypeEnum sortOrderType, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
 		if(pageSize > MAX_VIDEOS_PER_PAGE){
 			throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_TOO_MANY_VIDEOS_PER_PAGE, "User error - requested " + pageSize + " videos per page; maximum allowed is " + MAX_VIDEOS_PER_PAGE + " videos per page.");
 		}
@@ -916,6 +1141,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Videos FindVideosByCampaignId(String readToken, String campaignId, Integer pageSize, Integer pageNumber, SortByTypeEnum sortBy, SortOrderTypeEnum sortOrderType, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
+		try{
+			return _FindVideosByCampaignId(readToken, campaignId, pageSize, pageNumber, sortBy, sortOrderType, videoFields, customFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "FindVideosByCampaignId")){
+					return FindVideosByCampaignId(readToken, campaignId, pageSize, pageNumber, sortBy, sortOrderType, videoFields, customFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of FindVideosByCampaignId
+	private Videos _FindVideosByCampaignId(String readToken, String campaignId, Integer pageSize, Integer pageNumber, SortByTypeEnum sortBy, SortOrderTypeEnum sortOrderType, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
 		if(pageSize > MAX_VIDEOS_PER_PAGE){
 			throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_TOO_MANY_VIDEOS_PER_PAGE, "User error - requested " + pageSize + " videos per page; maximum allowed is " + MAX_VIDEOS_PER_PAGE + " videos per page.");
 		}
@@ -978,6 +1223,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Videos FindModifiedVideos(String readToken, Long fromDate, Set<VideoStateFilterEnum> filter, Integer pageSize, Integer pageNumber, SortByTypeEnum sortBy, SortOrderTypeEnum sortOrderType, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
+		try{
+			return _FindModifiedVideos(readToken, fromDate, filter, pageSize, pageNumber, sortBy, sortOrderType, videoFields, customFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "FindModifiedVideos")){
+					return FindModifiedVideos(readToken, fromDate, filter, pageSize, pageNumber, sortBy, sortOrderType, videoFields, customFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of FindModifiedVideos
+	private Videos _FindModifiedVideos(String readToken, Long fromDate, Set<VideoStateFilterEnum> filter, Integer pageSize, Integer pageNumber, SortByTypeEnum sortBy, SortOrderTypeEnum sortOrderType, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
 		if(pageSize > MAX_VIDEOS_PER_PAGE){
 			throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_TOO_MANY_VIDEOS_PER_PAGE, "User error - requested " + pageSize + " videos per page; maximum allowed is " + MAX_VIDEOS_PER_PAGE + " videos per page.");
 		}
@@ -1047,6 +1312,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Videos SearchVideos(String readToken, List<String> all, List<String> any, List<String> none, Boolean exact, SortByTypeEnum sortBy, SortOrderTypeEnum sortOrderType, Integer pageSize, Integer pageNumber, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
+		try{
+			return _SearchVideos(readToken, all, any, none, exact, sortBy, sortOrderType, pageSize, pageNumber, videoFields, customFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "SearchVideos")){
+					return SearchVideos(readToken, all, any, none, exact, sortBy, sortOrderType, pageSize, pageNumber, videoFields, customFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of SearchVideos
+	private Videos _SearchVideos(String readToken, List<String> all, List<String> any, List<String> none, Boolean exact, SortByTypeEnum sortBy, SortOrderTypeEnum sortOrderType, Integer pageSize, Integer pageNumber, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
 		if(pageSize > MAX_VIDEOS_PER_PAGE){
 			throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_TOO_MANY_VIDEOS_PER_PAGE, "User error - requested " + pageSize + " videos per page; maximum allowed is " + MAX_VIDEOS_PER_PAGE + " videos per page.");
 		}
@@ -1120,6 +1405,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Videos FindVideosByText(String readToken, String text, Integer pageSize, Integer pageNumber, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
+		try{
+			return _FindVideosByText(readToken, text, pageSize, pageNumber, videoFields, customFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "FindVideosByText")){
+					return FindVideosByText(readToken, text, pageSize, pageNumber, videoFields, customFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of FindVideosByText
+	private Videos _FindVideosByText(String readToken, String text, Integer pageSize, Integer pageNumber, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
 		if(pageSize > MAX_VIDEOS_PER_PAGE){
 			throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_TOO_MANY_VIDEOS_PER_PAGE, "User error - requested " + pageSize + " videos per page; maximum allowed is " + MAX_VIDEOS_PER_PAGE + " videos per page.");
 		}
@@ -1178,6 +1483,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Videos FindVideosByTags(String readToken, Set<String> andTags, Set<String> orTags, Integer pageSize, Integer pageNumber, SortByTypeEnum sortBy, SortOrderTypeEnum sortOrderType, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
+		try{
+			return _FindVideosByTags(readToken, andTags, orTags, pageSize, pageNumber, sortBy, sortOrderType, videoFields, customFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "FindVideosByTags")){
+					return FindVideosByTags(readToken, andTags, orTags, pageSize, pageNumber, sortBy, sortOrderType, videoFields, customFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of FindVideosByTags
+	private Videos _FindVideosByTags(String readToken, Set<String> andTags, Set<String> orTags, Integer pageSize, Integer pageNumber, SortByTypeEnum sortBy, SortOrderTypeEnum sortOrderType, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
 		if(pageSize > MAX_VIDEOS_PER_PAGE){
 			throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_TOO_MANY_VIDEOS_PER_PAGE, "User error - requested " + pageSize + " videos per page; maximum allowed is " + MAX_VIDEOS_PER_PAGE + " videos per page.");
 		}
@@ -1253,6 +1578,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Playlists FindAllPlaylists(String readToken, Integer pageSize, Integer pageNumber, SortByTypeEnum sortBy, SortOrderTypeEnum sortOrderType, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields, EnumSet<PlaylistFieldEnum> playlistFields) throws BrightcoveException {
+		try{
+			return _FindAllPlaylists(readToken, pageSize, pageNumber, sortBy, sortOrderType, videoFields, customFields, playlistFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "FindAllPlaylists")){
+					return FindAllPlaylists(readToken, pageSize, pageNumber, sortBy, sortOrderType, videoFields, customFields, playlistFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of FindAllPlaylists
+	private Playlists _FindAllPlaylists(String readToken, Integer pageSize, Integer pageNumber, SortByTypeEnum sortBy, SortOrderTypeEnum sortOrderType, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields, EnumSet<PlaylistFieldEnum> playlistFields) throws BrightcoveException {
 		if(pageSize > MAX_PLAYLISTS_PER_PAGE){
 			throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_TOO_MANY_PLAYLISTS_PER_PAGE, "User error - requested " + pageSize + " playlists per page; maximum allowed is " + MAX_PLAYLISTS_PER_PAGE + " playlists per page.");
 		}
@@ -1317,6 +1662,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Playlist FindPlaylistById(String readToken, Long playlistId, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields, EnumSet<PlaylistFieldEnum> playlistFields) throws BrightcoveException {
+		try{
+			return _FindPlaylistById(readToken, playlistId, videoFields, customFields, playlistFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "FindPlaylistById")){
+					return FindPlaylistById(readToken, playlistId, videoFields, customFields, playlistFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of FindPlaylistById
+	private Playlist _FindPlaylistById(String readToken, Long playlistId, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields, EnumSet<PlaylistFieldEnum> playlistFields) throws BrightcoveException {
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		
 		parameters.add(new BasicNameValuePair("command",     "find_playlist_by_id"));
@@ -1373,6 +1738,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Playlist FindPlaylistByReferenceId(String readToken, String referenceId, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields, EnumSet<PlaylistFieldEnum> playlistFields) throws BrightcoveException {
+		try{
+			return _FindPlaylistByReferenceId(readToken, referenceId, videoFields, customFields, playlistFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "FindPlaylistByReferenceId")){
+					return FindPlaylistByReferenceId(readToken, referenceId, videoFields, customFields, playlistFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of FindPlaylistByReferenceId
+	private Playlist _FindPlaylistByReferenceId(String readToken, String referenceId, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields, EnumSet<PlaylistFieldEnum> playlistFields) throws BrightcoveException {
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		
 		parameters.add(new BasicNameValuePair("command",      "find_playlist_by_reference_id"));
@@ -1429,6 +1814,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Playlists FindPlaylistsByIds(String readToken, Set<Long> playlistIds, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields, EnumSet<PlaylistFieldEnum> playlistFields) throws BrightcoveException {
+		try{
+			return _FindPlaylistsByIds(readToken, playlistIds, videoFields, customFields, playlistFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "FindPlaylistsByIds")){
+					return FindPlaylistsByIds(readToken, playlistIds, videoFields, customFields, playlistFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of FindPlaylistsByIds
+	private Playlists _FindPlaylistsByIds(String readToken, Set<Long> playlistIds, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields, EnumSet<PlaylistFieldEnum> playlistFields) throws BrightcoveException {
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		
 		parameters.add(new BasicNameValuePair("command",     "find_playlists_by_ids"));
@@ -1488,6 +1893,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Playlists FindPlaylistsByReferenceIds(String readToken, Set<String> referenceIds, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields, EnumSet<PlaylistFieldEnum> playlistFields) throws BrightcoveException {
+		try{
+			return _FindPlaylistsByReferenceIds(readToken, referenceIds, videoFields, customFields, playlistFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "FindPlaylistsByReferenceIds")){
+					return FindPlaylistsByReferenceIds(readToken, referenceIds, videoFields, customFields, playlistFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of FindPlaylistsByReferenceIds
+	private Playlists _FindPlaylistsByReferenceIds(String readToken, Set<String> referenceIds, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields, EnumSet<PlaylistFieldEnum> playlistFields) throws BrightcoveException {
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		
 		parameters.add(new BasicNameValuePair("command",     "find_playlists_by_reference_ids"));
@@ -1550,6 +1975,26 @@ public class ReadApi {
 	 * </ul>
 	 */
 	public Playlists FindPlaylistsForPlayerId(String readToken, String playerId, Integer pageSize, Integer pageNumber, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields, EnumSet<PlaylistFieldEnum> playlistFields) throws BrightcoveException {
+		try{
+			return _FindPlaylistsForPlayerId(readToken, playerId, pageSize, pageNumber, videoFields, customFields, playlistFields);
+		}
+		catch(BrightcoveException be){
+			if(exceptionHandler == null){
+				throw be;
+			}
+			else{
+				if(exceptionHandler.handleException(be, "FindPlaylistsForPlayerId")){
+					return FindPlaylistsForPlayerId(readToken, playerId, pageSize, pageNumber, videoFields, customFields, playlistFields);
+				}
+				else{
+					throw be;
+				}
+			}
+		}
+	}
+	
+	// Internal version of FindPlaylistsForPlayerId
+	private Playlists _FindPlaylistsForPlayerId(String readToken, String playerId, Integer pageSize, Integer pageNumber, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields, EnumSet<PlaylistFieldEnum> playlistFields) throws BrightcoveException {
 		if(pageSize > MAX_PLAYLISTS_PER_PAGE){
 			throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_TOO_MANY_PLAYLISTS_PER_PAGE, "User error - requested " + pageSize + " playlists per page; maximum allowed is " + MAX_PLAYLISTS_PER_PAGE + " playlists per page.");
 		}
@@ -1615,5 +2060,9 @@ public class ReadApi {
 	 */
 	public Boolean getEnableUds(){
 		return enableUds;
+	}
+	
+	public void setBrightcoveExceptionHandler(BrightcoveExceptionHandler exceptionHandler){
+		this.exceptionHandler = exceptionHandler;
 	}
 }

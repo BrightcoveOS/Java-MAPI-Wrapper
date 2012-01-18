@@ -13,6 +13,28 @@ New - [JavaDocs](http://brightcoveos.github.com/Java-MAPI-Wrapper/javadoc/)
 Downloads
 =========
 
+**Version 4.1.1**:
+
+This version an ExceptionHandler to the ReadApi (similar to the handler added
+to the WriteApi in 4.1.0).  It also includes the minor revision 4.1.1 of the
+Java Commons library.
+
+The ExceptionHandler object basically allows a user's custom code determine
+whether or not a command should be retried if an exception is thrown.
+
+Full Download - including all Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.1.1 with dependencies](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-4.1.1.zip)
+
+Minimal Download - including only necessary Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.1.1 with minimal dependencies](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-minimal-4.1.1.zip)
+
+Library Only:
+
+- [BC Java MAPI Wrapper v4.1.1](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-4.1.1.jar)
+
+
 **Version 4.1.0**:
 
 This version adds adds two major new features:
