@@ -1350,7 +1350,9 @@ public class ReadApi {
             }
 		}
 		if(none != null && none.size() > 0){
-			parameters.add(new BasicNameValuePair("none", CollectionUtils.JoinToString(none, ",")));
+			for(String noneParam : none){
+				parameters.add(new BasicNameValuePair("none", noneParam));
+			}
 		}
 		if(exact != null) {
 			parameters.add(new BasicNameValuePair("exact", String.valueOf(exact)));
