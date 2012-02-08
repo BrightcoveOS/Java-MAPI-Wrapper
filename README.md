@@ -13,6 +13,23 @@ New - [JavaDocs](http://brightcoveos.github.com/Java-MAPI-Wrapper/javadoc/)
 Downloads
 =========
 
+**Version 4.1.3**:
+
+Fixes bug in search_videos - the "none" parameter is multi-list rather than multi-value.
+i.e. none=foo&none=bar rather than none=foo&bar
+
+Full Download - including all Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.1.3 with dependencies](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-4.1.3.zip)
+
+Minimal Download - including only necessary Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.1.3 with minimal dependencies](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-minimal-4.1.3.zip)
+
+Library Only:
+
+- [BC Java MAPI Wrapper v4.1.3](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-4.1.3.jar)
+
 **Version 4.1.2**:
 
 Includes commons library v4.1.2 - primarily just bug fixes to the commons
