@@ -1862,7 +1862,7 @@ public class ReadApi {
 		}
 		
 		JSONObject response = executeCommand(parameters);
-		if(response == null){
+		if((response == null) || response.equals(JSONObject.NULL)){
 			throw new WrapperException(WrapperExceptionCode.MAPI_UNKNOWN_NULL, "Couldn't find playlists.");
 		}
 		
