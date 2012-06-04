@@ -13,6 +13,23 @@ Documentation
 Downloads
 =========
 
+**Version 4.1.6**:
+
+Includes fixes from Java-Commons 4.1.6.
+
+Full Download - including all Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.1.6 with dependencies](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-4.1.6.zip)
+
+Minimal Download - including only necessary Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.1.6 with minimal dependencies](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-minimal-4.1.6.zip)
+
+Library Only:
+
+- [BC Java MAPI Wrapper v4.1.6](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-4.1.6.jar)
+
+
 **Version 4.1.5**:
 
 Includes fixes from Java-Commons 4.1.5.
