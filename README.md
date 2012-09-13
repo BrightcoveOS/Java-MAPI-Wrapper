@@ -15,6 +15,23 @@ Downloads
 
 **Version 4.1.6**:
 
+Includes fixes from Java-Commons 4.1.7 (primarily just a few new sort by type enum values).
+
+Full Download - including all Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.1.7 with dependencies](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-4.1.7.zip)
+
+Minimal Download - including only necessary Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.1.7 with minimal dependencies](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-minimal-4.1.7.zip)
+
+Library Only:
+
+- [BC Java MAPI Wrapper v4.1.7](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-4.1.7.jar)
+
+
+**Version 4.1.6**:
+
 Includes fixes from Java-Commons 4.1.6.
 
 Full Download - including all Brightcove Commons libraries:

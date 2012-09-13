@@ -1,11 +1,11 @@
 <?xml version="1.0" ?>
 <project default="main">
 	<property name="release-package-name" value="bc-java-mapi-wrapper"/>
-	<property name="release-package-version" value="4.1.6"/>
-	<property name="commons-version" value="4.1.6"/>
+	<property name="release-package-version" value="4.1.7"/>
+	<property name="commons-version" value="4.1.7"/>
 	<property name="commons-lib" value="lib/bc-commons-with-dep-${commons-version}"/>
 	
-	<property name="ext-project-commons-release-dir" value="../../../java-commons/Java-Commons/release-build/release/bc-commons-with-dep"/>
+	<property name="ext-project-commons-release-dir" value="../../Java-Commons/release-build/release/bc-commons-with-dep"/>
 	
 	<property name="apache-mime-jar"                 value="${commons-lib}/apache-mime4j-0.6.1.jar"/>
 	<property name="bc-commons-catalog-objects-jar"  value="${commons-lib}/bc-commons-catalog-objects-${commons-version}.jar"/>
@@ -41,6 +41,10 @@
 	
 	<target name="prepare" description="Prepare target">
 		<echo>Preparing project:</echo>
+		
+		<delete dir="lib" failonerror="false" verbose="false"/>
+		
+		<mkdir dir="lib"/>
 		<mkdir dir="bin"/>
 		
 		<echo>Copying commons library from external project</echo>
@@ -65,7 +69,7 @@
 	
 	<target name="compile" description="Compilation target">
 		<echo>Compiling source code:</echo>
-		<javac debug="on" srcdir="src" destdir="bin" includes="**/*">
+		<javac debug="on" srcdir="src" destdir="bin" includes="**/*" includeantruntime="false">
 			<classpath refid="project.class.path" />
 		</javac>
 	</target>
