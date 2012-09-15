@@ -80,7 +80,8 @@ public class ReadApi {
 	
 	private HttpClientFactory clientFactory;
 	
-	private Boolean    enableUds;
+	// private Boolean    enableUds;
+	private String deliveryProtocol;
 	
 	private static final String  READ_API_DEFAULT_SCHEME = "http";
 	private static final String  READ_API_DEFAULT_HOST   = "api.brightcove.com";
@@ -165,7 +166,8 @@ public class ReadApi {
 		log       = null;
 		charSet   = "UTF-8";
 		
-		enableUds = false;
+		// enableUds = false;
+		deliveryProtocol = null;
 		
 		readProtocolScheme = READ_API_DEFAULT_SCHEME;
 		readHost           = READ_API_DEFAULT_HOST;
@@ -234,8 +236,8 @@ public class ReadApi {
 	 * </ul>
 	 */
 	private JSONObject executeCommand(List<NameValuePair> parameters) throws  BrightcoveException {
-		if(enableUds){
-			parameters.add(new BasicNameValuePair("media_delivery", "http"));
+		if(deliveryProtocol != null){
+			parameters.add(new BasicNameValuePair("media_delivery", deliveryProtocol));
 		}
 		
 		// Build up URL from the parameters provided
@@ -2046,9 +2048,13 @@ public class ReadApi {
 	 *    Download instead of streaming.  Note that in order for this to work,
 	 *    your account must be enabled for Universal Delivery - something that
 	 *    can only be done by Brightcove Support.</p>
+	 * <p><b>Deprecated:</b>Use the DeliveryProtocol instead.</p>
 	 */
+	@Deprecated
 	public void setEnableUds(Boolean enableUds){
-		this.enableUds = enableUds;
+		if(enableUds){
+			this.deliveryProtocol = "http";
+		}
 	}
 	
 	/**
@@ -2057,11 +2063,40 @@ public class ReadApi {
 	 *    Download instead of streaming.  Note that in order for this to work,
 	 *    your account must be enabled for Universal Delivery - something that
 	 *    can only be done by Brightcove Support.</p>
+	 * <p><b>Deprecated:</b>Use the DeliveryProtocol instead.</p>
 	 * 
 	 * @return Whether or not UDS URLs should be returned by the Media API
 	 */
+	@Deprecated
 	public Boolean getEnableUds(){
-		return enableUds;
+		if("http".equals(this.deliveryProtocol)){
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * <p><i><u>For advanced users...</u></i></p>
+	 * <p>Sets delivery protocal for UDS/PD delivery ("http") or iOS delivery
+	 *    ("http_ios").  Note that in order for UDS/PD to work,
+	 *    your account must be enabled for Universal Delivery - something that
+	 *    can only be done by Brightcove Support.</p>
+	 */
+	public void setDeliveryProtocol(String deliveryProtocol){
+		this.deliveryProtocol = deliveryProtocol;
+	}
+	
+	/**
+	 * <p><i><u>For advanced users...</u></i></p>
+	 * <p>Gets delivery protocal for UDS/PD delivery ("http") or iOS delivery
+	 *    ("http_ios").  Note that in order for UDS/PD to work,
+	 *    your account must be enabled for Universal Delivery - something that
+	 *    can only be done by Brightcove Support.</p>
+	 * 
+	 * @return Whether or not UDS URLs should be returned by the Media API
+	 */
+	public String getDeliveryProtocol(){
+		return deliveryProtocol;
 	}
 	
 	public void setBrightcoveExceptionHandler(BrightcoveExceptionHandler exceptionHandler){

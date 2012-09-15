@@ -13,7 +13,24 @@ Documentation
 Downloads
 =========
 
-**Version 4.1.6**:
+**Version 4.1.8**:
+
+Adding iOS Rendition objects.  Deprecating enableUDS methods - replacing with get/setDeliveryMethod().  Delivery method can be set to "http" (PD downloads if enabled at the account level) or "http_ios" (for iOS m3u8 delivery).
+
+Full Download - including all Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.1.8 with dependencies](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-4.1.8.zip)
+
+Minimal Download - including only necessary Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.1.8 with minimal dependencies](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-minimal-4.1.8.zip)
+
+Library Only:
+
+- [BC Java MAPI Wrapper v4.1.8](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-4.1.8.jar)
+
+
+**Version 4.1.7**:
 
 Includes fixes from Java-Commons 4.1.7 (primarily just a few new sort by type enum values).
 
