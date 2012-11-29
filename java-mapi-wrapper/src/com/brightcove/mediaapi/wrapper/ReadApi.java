@@ -485,19 +485,16 @@ public class ReadApi {
 	
 	// Internal version of FindAllVideos
 	private Videos _FindAllVideos(String readToken, Integer pageSize, Integer pageNumber, SortByTypeEnum sortBy, SortOrderTypeEnum sortOrderType, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
-		if(pageSize > MAX_VIDEOS_PER_PAGE){
-			throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_TOO_MANY_VIDEOS_PER_PAGE, "User error - requested " + pageSize + " videos per page; maximum allowed is " + MAX_VIDEOS_PER_PAGE + " videos per page.");
-		}
-		
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		
 		parameters.add(new BasicNameValuePair("command",        "find_all_videos"));
 		parameters.add(new BasicNameValuePair("token",          readToken));
-		parameters.add(new BasicNameValuePair("page_size",      ""+pageSize));
-		parameters.add(new BasicNameValuePair("page_number",    ""+pageNumber));
-		parameters.add(new BasicNameValuePair("sort_by",        ""+sortBy));
-		parameters.add(new BasicNameValuePair("sort_order",     ""+sortOrderType));
 		parameters.add(new BasicNameValuePair("get_item_count", "true"));
+		
+		addPageSizeParameter(parameters, pageSize);
+		addPageNumberParameter(parameters, pageNumber);
+		addSortByParameter(parameters, sortBy);
+		addSortOrderParameter(parameters, sortOrderType);
 		
 		String videoFieldsString = CollectionUtils.JoinToString((Set<?>)videoFields, ",");
 		if(!("".equals(videoFieldsString))){
@@ -1082,20 +1079,17 @@ public class ReadApi {
 	
 	// Internal version of FindVideosByUserId
 	private Videos _FindVideosByUserId(String readToken, String userId, Integer pageSize, Integer pageNumber, SortByTypeEnum sortBy, SortOrderTypeEnum sortOrderType, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
-		if(pageSize > MAX_VIDEOS_PER_PAGE){
-			throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_TOO_MANY_VIDEOS_PER_PAGE, "User error - requested " + pageSize + " videos per page; maximum allowed is " + MAX_VIDEOS_PER_PAGE + " videos per page.");
-		}
-		
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		
 		parameters.add(new BasicNameValuePair("command",        "find_videos_by_user_id"));
 		parameters.add(new BasicNameValuePair("user_id",        ""+userId));
 		parameters.add(new BasicNameValuePair("token",          readToken));
-		parameters.add(new BasicNameValuePair("page_size",      ""+pageSize));
-		parameters.add(new BasicNameValuePair("page_number",    ""+pageNumber));
-		parameters.add(new BasicNameValuePair("sort_by",        ""+sortBy));
-		parameters.add(new BasicNameValuePair("sort_order",     ""+sortOrderType));
 		parameters.add(new BasicNameValuePair("get_item_count", "true"));
+		
+		addPageSizeParameter(parameters, pageSize);
+		addPageNumberParameter(parameters, pageNumber);
+		addSortByParameter(parameters, sortBy);
+		addSortOrderParameter(parameters, sortOrderType);
 		
 		String videoFieldsString = CollectionUtils.JoinToString((Set<?>)videoFields, ",");
 		if(!("".equals(videoFieldsString))){
@@ -1163,20 +1157,17 @@ public class ReadApi {
 	
 	// Internal version of FindVideosByCampaignId
 	private Videos _FindVideosByCampaignId(String readToken, String campaignId, Integer pageSize, Integer pageNumber, SortByTypeEnum sortBy, SortOrderTypeEnum sortOrderType, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
-		if(pageSize > MAX_VIDEOS_PER_PAGE){
-			throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_TOO_MANY_VIDEOS_PER_PAGE, "User error - requested " + pageSize + " videos per page; maximum allowed is " + MAX_VIDEOS_PER_PAGE + " videos per page.");
-		}
-		
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		
 		parameters.add(new BasicNameValuePair("command",        "find_videos_by_campaign_id"));
 		parameters.add(new BasicNameValuePair("campaign_id",        ""+campaignId));
 		parameters.add(new BasicNameValuePair("token",          readToken));
-		parameters.add(new BasicNameValuePair("page_size",      ""+pageSize));
-		parameters.add(new BasicNameValuePair("page_number",    ""+pageNumber));
-		parameters.add(new BasicNameValuePair("sort_by",        ""+sortBy));
-		parameters.add(new BasicNameValuePair("sort_order",     ""+sortOrderType));
 		parameters.add(new BasicNameValuePair("get_item_count", "true"));
+		
+		addPageSizeParameter(parameters, pageSize);
+		addPageNumberParameter(parameters, pageNumber);
+		addSortByParameter(parameters, sortBy);
+		addSortOrderParameter(parameters, sortOrderType);
 		
 		String videoFieldsString = CollectionUtils.JoinToString((Set<?>)videoFields, ",");
 		if(!("".equals(videoFieldsString))){
@@ -1245,20 +1236,17 @@ public class ReadApi {
 	
 	// Internal version of FindModifiedVideos
 	private Videos _FindModifiedVideos(String readToken, Long fromDate, Set<VideoStateFilterEnum> filter, Integer pageSize, Integer pageNumber, SortByTypeEnum sortBy, SortOrderTypeEnum sortOrderType, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
-		if(pageSize > MAX_VIDEOS_PER_PAGE){
-			throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_TOO_MANY_VIDEOS_PER_PAGE, "User error - requested " + pageSize + " videos per page; maximum allowed is " + MAX_VIDEOS_PER_PAGE + " videos per page.");
-		}
-		
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		
 		parameters.add(new BasicNameValuePair("command",        "find_modified_videos"));
 		parameters.add(new BasicNameValuePair("from_date",      ""+fromDate));
 		parameters.add(new BasicNameValuePair("token",          readToken));
-		parameters.add(new BasicNameValuePair("page_size",      ""+pageSize));
-		parameters.add(new BasicNameValuePair("page_number",    ""+pageNumber));
-		parameters.add(new BasicNameValuePair("sort_by",        ""+sortBy));
-		parameters.add(new BasicNameValuePair("sort_order",     ""+sortOrderType));
 		parameters.add(new BasicNameValuePair("get_item_count", "true"));
+		
+		addPageSizeParameter(parameters, pageSize);
+		addPageNumberParameter(parameters, pageNumber);
+		addSortByParameter(parameters, sortBy);
+		addSortOrderParameter(parameters, sortOrderType);
 		
 		String videoFieldsString = CollectionUtils.JoinToString((Set<?>)videoFields, ",");
 		if(!("".equals(videoFieldsString))){
@@ -1334,10 +1322,6 @@ public class ReadApi {
 	
 	// Internal version of SearchVideos
 	private Videos _SearchVideos(String readToken, List<String> all, List<String> any, List<String> none, Boolean exact, SortByTypeEnum sortBy, SortOrderTypeEnum sortOrderType, Integer pageSize, Integer pageNumber, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
-		if(pageSize > MAX_VIDEOS_PER_PAGE){
-			throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_TOO_MANY_VIDEOS_PER_PAGE, "User error - requested " + pageSize + " videos per page; maximum allowed is " + MAX_VIDEOS_PER_PAGE + " videos per page.");
-		}
-		
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		
 		parameters.add(new BasicNameValuePair("command",        "search_videos"));
@@ -1359,10 +1343,12 @@ public class ReadApi {
 		if(exact != null) {
 			parameters.add(new BasicNameValuePair("exact", String.valueOf(exact)));
 		}
+		
+		addPageSizeParameter(parameters, pageSize);
+		addPageNumberParameter(parameters, pageNumber);
+		
 		parameters.add(new BasicNameValuePair("sort_by",        ""+sortBy + ":" + sortOrderType));
 		parameters.add(new BasicNameValuePair("token",          readToken));
-		parameters.add(new BasicNameValuePair("page_size",      ""+pageSize));
-		parameters.add(new BasicNameValuePair("page_number",    ""+pageNumber));
 		parameters.add(new BasicNameValuePair("get_item_count", "true"));
 		
 		String videoFieldsString = CollectionUtils.JoinToString((Set<?>)videoFields, ",");
@@ -1507,19 +1493,16 @@ public class ReadApi {
 	
 	// Internal version of FindVideosByTags
 	private Videos _FindVideosByTags(String readToken, Set<String> andTags, Set<String> orTags, Integer pageSize, Integer pageNumber, SortByTypeEnum sortBy, SortOrderTypeEnum sortOrderType, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields) throws BrightcoveException {
-		if(pageSize > MAX_VIDEOS_PER_PAGE){
-			throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_TOO_MANY_VIDEOS_PER_PAGE, "User error - requested " + pageSize + " videos per page; maximum allowed is " + MAX_VIDEOS_PER_PAGE + " videos per page.");
-		}
-		
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		
 		parameters.add(new BasicNameValuePair("command",        "find_videos_by_tags"));
 		parameters.add(new BasicNameValuePair("token",          readToken));
-		parameters.add(new BasicNameValuePair("page_size",      ""+pageSize));
-		parameters.add(new BasicNameValuePair("page_number",    ""+pageNumber));
-		parameters.add(new BasicNameValuePair("sort_by",        ""+sortBy));
-		parameters.add(new BasicNameValuePair("sort_order",     ""+sortOrderType));
 		parameters.add(new BasicNameValuePair("get_item_count", "true"));
+		
+		addPageSizeParameter(parameters, pageSize);
+		addPageNumberParameter(parameters, pageNumber);
+		addSortByParameter(parameters, sortBy);
+		addSortOrderParameter(parameters, sortOrderType);
 		
 		String videoFieldsString = CollectionUtils.JoinToString((Set<?>)videoFields, ",");
 		if(!("".equals(videoFieldsString))){
@@ -1602,19 +1585,16 @@ public class ReadApi {
 	
 	// Internal version of FindAllPlaylists
 	private Playlists _FindAllPlaylists(String readToken, Integer pageSize, Integer pageNumber, SortByTypeEnum sortBy, SortOrderTypeEnum sortOrderType, EnumSet<VideoFieldEnum> videoFields, Set<String> customFields, EnumSet<PlaylistFieldEnum> playlistFields) throws BrightcoveException {
-		if(pageSize > MAX_PLAYLISTS_PER_PAGE){
-			throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_TOO_MANY_PLAYLISTS_PER_PAGE, "User error - requested " + pageSize + " playlists per page; maximum allowed is " + MAX_PLAYLISTS_PER_PAGE + " playlists per page.");
-		}
-		
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
 		
 		parameters.add(new BasicNameValuePair("command",        "find_all_playlists"));
 		parameters.add(new BasicNameValuePair("token",          readToken));
-		parameters.add(new BasicNameValuePair("page_size",      ""+pageSize));
-		parameters.add(new BasicNameValuePair("page_number",    ""+pageNumber));
-		parameters.add(new BasicNameValuePair("sort_by",        ""+sortBy));
-		parameters.add(new BasicNameValuePair("sort_order",     ""+sortOrderType));
 		parameters.add(new BasicNameValuePair("get_item_count", "true"));
+		
+		addPageSizeParameter(parameters, pageSize);
+		addPageNumberParameter(parameters, pageNumber);
+		addSortByParameter(parameters, sortBy);
+		addSortOrderParameter(parameters, sortOrderType);
 		
 		String videoFieldsString = CollectionUtils.JoinToString((Set<?>)videoFields, ",");
 		if(!("".equals(videoFieldsString))){
@@ -2101,5 +2081,42 @@ public class ReadApi {
 	
 	public void setBrightcoveExceptionHandler(BrightcoveExceptionHandler exceptionHandler){
 		this.exceptionHandler = exceptionHandler;
+	}
+	
+	
+	private void addPageSizeParameter(List<NameValuePair> parameters, Integer pageSize) throws WrapperException {
+		if(pageSize == null){
+			return;
+		}
+		
+		if(pageSize > MAX_VIDEOS_PER_PAGE){
+			throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_TOO_MANY_VIDEOS_PER_PAGE, "User error - requested " + pageSize + " videos per page; maximum allowed is " + MAX_VIDEOS_PER_PAGE + " videos per page.");
+		}
+		
+		parameters.add(new BasicNameValuePair("page_size", ""+pageSize));
+	}
+	
+	private void addPageNumberParameter(List<NameValuePair> parameters, Integer pageNumber){
+		if(pageNumber == null){
+			return;
+		}
+		
+		parameters.add(new BasicNameValuePair("page_number", ""+pageNumber));
+	}
+	
+	private void addSortByParameter(List<NameValuePair> parameters, SortByTypeEnum sortBy){
+		if(sortBy == null){
+			return;
+		}
+		
+		parameters.add(new BasicNameValuePair("sort_by", ""+sortBy));
+	}
+	
+	private void addSortOrderParameter(List<NameValuePair> parameters, SortOrderTypeEnum sortOrderType){
+		if(sortOrderType == null){
+			return;
+		}
+		
+		parameters.add(new BasicNameValuePair("sort_order", ""+sortOrderType));
 	}
 }
