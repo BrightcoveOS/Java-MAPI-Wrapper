@@ -13,6 +13,24 @@ Documentation
 Downloads
 =========
 
+**Version 4.1.9**:
+
+Including 4.1.9 commons lib with support for LIVE_STREAMING controller type.
+Fix to make optional URL parameters (page size, page number, sort by, sort order) actually optional - passing in null will remove the parameter from the URL request.
+
+Full Download - including all Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.1.9 with dependencies](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-4.1.9.zip)
+
+Minimal Download - including only necessary Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.1.9 with minimal dependencies](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-minimal-4.1.9.zip)
+
+Library Only:
+
+- [BC Java MAPI Wrapper v4.1.9](https://github.com/downloads/BrightcoveOS/Java-MAPI-Wrapper/bc-java-mapi-wrapper-4.1.9.jar)
+
+
 **Version 4.1.8**:
 
 Adding iOS Rendition objects.  Deprecating enableUDS methods - replacing with get/setDeliveryMethod().  Delivery method can be set to "http" (PD downloads if enabled at the account level) or "http_ios" (for iOS m3u8 delivery).
