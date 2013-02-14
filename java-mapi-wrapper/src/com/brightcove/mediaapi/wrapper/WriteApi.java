@@ -957,7 +957,6 @@ public class WriteApi {
 			return result;
 		}
 		catch(JSONException jsone){
-			System.out.println(jsone);
 			throw new WrapperException(WrapperExceptionCode.MAPI_VIDEO_NOT_UPDATED, "Couldn't parse Video object from Media API response when trying to update video '" + video + "'.");
 		}
 	}
@@ -1121,11 +1120,15 @@ public class WriteApi {
 		}
 		
 		try{
-			Playlist result = new Playlist(response);
+			Playlist result = null;
+			if(response.getJSONObject("result") != null){
+				 JSONObject jsonResult = response.getJSONObject("result");
+				 result = new Playlist(jsonResult);
+			}
 			return result;
 		}
 		catch(JSONException jsone){
-			throw new WrapperException(WrapperExceptionCode.MAPI_PLAYLIST_NOT_UPDATED, "No Playlist returned in the response from Media API when trying to update playlist '" + playlist + "'.");
+			throw new WrapperException(WrapperExceptionCode.MAPI_PLAYLIST_NOT_UPDATED, "No Playlist returned in the response from Media API when trying to update playlist '" + playlist + "'.  (root exception: '" + jsone + "')");
 		}
 	}
 	

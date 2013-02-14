@@ -13,6 +13,24 @@ Documentation
 Downloads
 =========
 
+**Version 4.1.10**:
+
+- Moving downloads to Amazon S3.
+- Including 4.1.10 commons lib with fixes for Playlists, new log redacting, etc.
+
+Full Download - including all Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.1.10 with dependencies](http://bcos-release-files.s3.amazonaws.com/java-mapi-wrapper/bc-java-mapi-wrapper-4.1.10.zip)
+
+Minimal Download - including only necessary Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.1.10 with minimal dependencies](http://bcos-release-files.s3.amazonaws.com/java-mapi-wrapper/bc-java-mapi-wrapper-minimal-4.1.10.zip)
+
+Library Only:
+
+- [BC Java MAPI Wrapper v4.1.10](http://bcos-release-files.s3.amazonaws.com/java-mapi-wrapper/bc-java-mapi-wrapper-4.1.10.jar)
+
+
 **Version 4.1.9**:
 
 Including 4.1.9 commons lib with support for LIVE_STREAMING controller type.
