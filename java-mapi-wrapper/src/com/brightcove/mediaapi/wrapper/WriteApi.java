@@ -390,23 +390,24 @@ public class WriteApi {
 		if(video.getVideoFullLength() != null){
 			throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_INCORRECT_PARAMETERS, "Video has the Video Full Length field set, which can not be written to a video in the initial create_video call to the Media API.");
 		}
-		if(video.getRenditions() != null){
-			throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_INCORRECT_PARAMETERS, "Video contains renditions, which can not be written to a video in the initial create_video call to the Media API.");
-		}
 		
-		File file    = null;
-		Long maxSize = 0l;
+		// if(video.getRenditions() != null){
+		// 	throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_INCORRECT_PARAMETERS, "Video contains renditions, which can not be written to a video in the initial create_video call to the Media API.");
+		// }
+		
+		File   file         = null;
+		Long   maxSize      = 0l;
+		String fileChecksum = null;
 		if(filename != null){
 			file    = new File(filename);
 			maxSize = file.length();
-		}
-		
-		String fileChecksum = null;
-		try{
-			fileChecksum = GenerateFileData.getMD5Checksum(filename);
-		}
-		catch(Exception e){
-			throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_INVALID_FILE, "Exception caught trying to generate hash code for file '" + filename + "': " + e + ".");
+			
+			try{
+				fileChecksum = GenerateFileData.getMD5Checksum(filename);
+			}
+			catch(Exception e){
+				throw new WrapperException(WrapperExceptionCode.USER_REQUESTED_INVALID_FILE, "Exception caught trying to generate hash code for file '" + filename + "': " + e + ".");
+			}
 		}
 		
 		JSONObject json = null;
@@ -422,13 +423,21 @@ public class WriteApi {
 			// JSONObject videoObj = new JSONObject();
 			paramObj.put("video", video.toJson());
 			
-			paramObj.put("filename",                   file.getName());
-			paramObj.put("maxsize",                    maxSize);
-			paramObj.put("file_checksum",              fileChecksum);
-			paramObj.put("create_multiple_renditions", createMultipleRenditions);
-			paramObj.put("preserve_source_rendition",  preserveSourceRendition);
-			paramObj.put("H264NoProcessing",           h264NoProcessing);
+			if(file != null){
+				paramObj.put("filename",                   file.getName());
+				paramObj.put("maxsize",                    maxSize);
+				paramObj.put("file_checksum",              fileChecksum);
+			}
 			
+			if(createMultipleRenditions != null){
+				paramObj.put("create_multiple_renditions", createMultipleRenditions);
+			}
+			if(preserveSourceRendition != null){
+				paramObj.put("preserve_source_rendition",  preserveSourceRendition);
+			}
+			if(h264NoProcessing != null){
+				paramObj.put("H264NoProcessing",           h264NoProcessing);
+			}
 			if(encodeTo != null){
 				paramObj.put("encode_to", encodeTo);
 			}

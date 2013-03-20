@@ -13,6 +13,23 @@ Documentation
 Downloads
 =========
 
+**Version 4.1.11**:
+
+- Allowing creation of a video with renditions only (mainly for remote asset titles)
+
+Full Download - including all Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.1.11 with dependencies](http://bcos-release-files.s3.amazonaws.com/java-mapi-wrapper/bc-java-mapi-wrapper-4.1.11.zip)
+
+Minimal Download - including only necessary Brightcove Commons libraries:
+
+- [BC Java MAPI Wrapper v4.1.11 with minimal dependencies](http://bcos-release-files.s3.amazonaws.com/java-mapi-wrapper/bc-java-mapi-wrapper-minimal-4.1.11.zip)
+
+Library Only:
+
+- [BC Java MAPI Wrapper v4.1.11](http://bcos-release-files.s3.amazonaws.com/java-mapi-wrapper/bc-java-mapi-wrapper-4.1.11.jar)
+
+
 **Version 4.1.10**:
 
 - Moving downloads to Amazon S3.

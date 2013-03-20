@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <project default="main">
 	<property name="release-package-name" value="bc-java-mapi-wrapper"/>
-	<property name="release-package-version" value="4.1.10"/>
+	<property name="release-package-version" value="4.1.11"/>
 	<property name="commons-version" value="4.1.10"/>
 	<property name="commons-lib" value="lib/bc-commons-with-dep-${commons-version}"/>
 	
