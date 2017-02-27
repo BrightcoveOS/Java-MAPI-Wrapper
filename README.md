@@ -1,6 +1,8 @@
 About
 =====
 
+**WARNING:** The Media API is deprecated and should not be used for new projects. [More information](https://support.brightcove.com/en/service-changes).
+
 This project provides a starting point for integrating the Brightcove Media API into your application. It provides simple ways to interact with the API.
 
 This project relies on the [Brightcove Commons open source libraries](https://github.com/BrightcoveOS/Java-Commons).
