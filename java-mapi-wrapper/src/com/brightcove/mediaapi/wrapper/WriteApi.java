@@ -257,7 +257,17 @@ public class WriteApi {
 		String       buffer;
 		try{
 			HttpClient httpAgent = clientFactory.getHttpClient();
-			response = httpAgent.execute(method);
+
+            //Set proxy and port if passed as VM param
+            String proxyHost = System.getProperty("http.proxyHost") != null?System.getProperty("http.proxyHost"):null;
+            int proxyPort = System.getProperty("http.proxyPort") != null?Integer.parseInt(System.getProperty("http.proxyPort")):80;
+            HttpHost proxy = null;
+            if (proxyHost!=null) {
+                proxy = new HttpHost(proxyHost, proxyPort);
+                httpAgent.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+            }
+
+            response = httpAgent.execute(method);
 			
 			// Make sure the HTTP communication was OK (not the same as an error in the Media API reponse)
 			Integer statusCode = response.getStatusLine().getStatusCode();
